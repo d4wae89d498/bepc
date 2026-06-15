@@ -1,0 +1,2343 @@
+\documentclass[12pt,a4paper]{report}
+
+% --- Encodage et langue ---
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+
+% --- Mise en page ---
+\usepackage[top=2.5cm, bottom=2.5cm, left=2.5cm, right=2.5cm]{geometry}
+\usepackage{setspace}
+\onehalfspacing
+
+% --- Graphiques et couleurs ---
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, shapes.symbols, arrows.meta, positioning, calc, fit, backgrounds, decorations.markings, shadows}
+\usepackage{pgfgantt}
+\usepackage{xcolor}
+
+% --- Tableaux ---
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage{array}
+
+% --- En-têtes et pieds de page ---
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+% --- Divers ---
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{caption}
+\usepackage{float}
+\usepackage{titlesec}
+\usepackage{tocloft}
+\usepackage{pifont}
+\usepackage{eurosym}
+\usepackage{parskip}
+
+% === COULEURS TOSHIHAUT ===
+\definecolor{thbleu}{HTML}{1B3A5C}
+\definecolor{thorange}{HTML}{E87722}
+\definecolor{thgris}{HTML}{F2F2F2}
+\definecolor{thgrisfonce}{HTML}{5A5A5A}
+\definecolor{thvert}{HTML}{2E7D32}
+
+% === STYLE DES TITRES ===
+\titleformat{\chapter}[display]
+  {\normalfont\huge\bfseries\color{thbleu}}
+  {\chaptertitlename\ \thechapter}{20pt}{\Huge}
+\titleformat{\section}
+  {\normalfont\Large\bfseries\color{thbleu}}{\thesection}{1em}{}
+\titleformat{\subsection}
+  {\normalfont\large\bfseries\color{thbleu!80}}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}
+  {\normalfont\normalsize\bfseries\color{thbleu!60}}{\thesubsubsection}{1em}{}
+
+% === EN-TETES / PIEDS DE PAGE ===
+\pagestyle{fancy}
+\setlength{\headheight}{15pt}
+\fancyhf{}
+\fancyhead[L]{\small\color{thgrisfonce}\leftmark}
+\fancyhead[R]{\small\color{thbleu}\textbf{ToshiHaut}}
+\fancyfoot[C]{\thepage\ / \pageref{LastPage}}
+\fancyfoot[R]{\small\color{red}\textit{CONFIDENTIEL}}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.2pt}
+
+\fancypagestyle{plain}{
+  \fancyhf{}
+  \fancyfoot[C]{\thepage\ / \pageref{LastPage}}
+  \fancyfoot[R]{\small\color{red}\textit{CONFIDENTIEL}}
+  \renewcommand{\headrulewidth}{0pt}
+}
+
+% === COMMANDES PERSONNALISÉES ===
+\newcommand{\prixht}[1]{#1~\euro{}~HT}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+
+% === HYPERREF CONFIG ===
+\hypersetup{
+  colorlinks=true,
+  linkcolor=thbleu,
+  urlcolor=thorange,
+  citecolor=thbleu,
+  pdftitle={Réponse AO Infrastructure BOOM - ToshiHaut},
+  pdfauthor={ToshiHaut SAS},
+}
+
+% === TOC depth ===
+\setcounter{tocdepth}{3}
+\setcounter{secnumdepth}{3}
+
+\begin{document}
+
+% ============================================================
+% PAGE DE GARDE
+% ============================================================
+\begin{titlepage}
+\begin{tikzpicture}[remember picture, overlay]
+  % Fond supérieur
+  \fill[thbleu] (current page.north west) rectangle ([yshift=-8cm]current page.north east);
+  % Barre orange
+  \fill[thorange] ([yshift=-8cm]current page.north west) rectangle ([yshift=-8.4cm]current page.north east);
+  % Logo ToshiHaut
+  \node[anchor=north west, white, font=\fontsize{42}{48}\selectfont\bfseries] at ([xshift=2.5cm, yshift=-2cm]current page.north west) {ToshiHaut};
+  \node[anchor=north west, thorange, font=\fontsize{14}{18}\selectfont] at ([xshift=2.5cm, yshift=-4.2cm]current page.north west) {Solutions d'infrastructure IT};
+  % Titre du document
+  \node[anchor=west, font=\fontsize{26}{32}\selectfont\bfseries, text width=15cm, thbleu] at ([xshift=2.5cm, yshift=-11cm]current page.north west) {Réponse à l'appel d'offres\\Infrastructure informatique};
+  \node[anchor=west, font=\fontsize{18}{22}\selectfont, text width=15cm, thorange] at ([xshift=2.5cm, yshift=-13.5cm]current page.north west) {Société BOOM};
+  % Informations
+  \node[anchor=north west, font=\large, text width=12cm, thgrisfonce] at ([xshift=2.5cm, yshift=-15.2cm]current page.north west) {
+    \begin{tabular}{ll}
+    \textbf{Référence} & TH-AO-2024-BOOM-001 \\[4pt]
+    \textbf{Version} & 1.0 \\[4pt]
+    \textbf{Date} & 15 novembre 2024 \\[4pt]
+    \textbf{Classification} & Confidentiel \\[4pt]
+    \textbf{Rédacteurs} & Julien Dubois, Sophie Laurent \\[4pt]
+    \textbf{Validation} & Antoine Mercier, Directeur Général
+    \end{tabular}
+  };
+  % Pied de page
+  \node[anchor=south, font=\small, thgrisfonce] at ([yshift=1.5cm]current page.south) {
+    ToshiHaut SAS -- 42, avenue Jean Jaurès -- 31000 Toulouse -- contact@toshihaut.fr -- 05 61 00 00 42
+  };
+  % Barre orange basse
+  \fill[thorange] ([yshift=0.8cm]current page.south west) rectangle ([yshift=1cm]current page.south east);
+\end{tikzpicture}
+\end{titlepage}
+
+% ============================================================
+% PAGE AVERTISSEMENT CONFIDENTIALITE
+% ============================================================
+\thispagestyle{empty}
+\vspace*{4cm}
+\begin{center}
+{\Large\bfseries\color{red} AVERTISSEMENT -- DOCUMENT CONFIDENTIEL}
+\end{center}
+\vspace{1cm}
+
+Le présent document constitue la réponse de la société ToshiHaut SAS à l'appel d'offres émis par la société BOOM pour le remplacement de l'ensemble de son infrastructure informatique.
+
+Ce document est strictement confidentiel. Il est transmis à la société BOOM dans le cadre exclusif de l'évaluation de cette réponse à l'appel d'offres. Toute reproduction, diffusion ou utilisation en dehors de ce contexte est formellement interdite sans l'accord écrit préalable de ToshiHaut SAS.
+
+Les informations techniques, les architectures proposées, les tarifications et les méthodologies décrites dans ce document sont la propriété intellectuelle de ToshiHaut SAS. Elles résultent de l'expertise et du savoir-faire accumulés par nos équipes au fil de nos missions.
+
+En cas de non-attribution du marché, la société BOOM s'engage à détruire l'ensemble des copies de ce document et à ne pas utiliser les informations qu'il contient.
+
+\vspace{2cm}
+\begin{center}
+\begin{tabular}{|p{6cm}|p{6cm}|}
+\hline
+\textbf{Émetteur} & \textbf{Destinataire} \\
+\hline
+ToshiHaut SAS & Société BOOM \\
+42, avenue Jean Jaurès & Direction des Systèmes d'Information \\
+31000 Toulouse & \\
+\hline
+\end{tabular}
+\end{center}
+
+\newpage
+
+% ============================================================
+% SOMMAIRE
+% ============================================================
+\tableofcontents
+\newpage
+\listoffigures
+\newpage
+\listoftables
+\newpage
+
+% ============================================================
+% CHAPITRE 1 : PRÉSENTATION DE TOSHIHAUT
+% ============================================================
+\chapter{Présentation de ToshiHaut}
+
+\section{L'entreprise}
+
+ToshiHaut SAS est une entreprise de services du numérique (ESN) fondée en 2012 à Toulouse par Antoine Mercier et Sophie Laurent, deux ingénieurs issus du monde des télécommunications et des infrastructures IT. Le nom \og ToshiHaut \fg{} est un clin d'oeil au japonais \textit{toshi} (ville, cité) et au français \og haut \fg{}, symbolisant notre ambition de tirer vers le haut les infrastructures numériques des organisations.
+
+Initialement spécialisée dans le conseil en architecture réseau pour les PME de la région Occitanie, l'entreprise a progressivement élargi son périmètre d'intervention pour couvrir l'ensemble du spectre des infrastructures informatiques : conception de datacenters, déploiement de réseaux LAN et WAN, virtualisation, solutions de stockage, sécurité des systèmes d'information, et accompagnement à la transformation numérique.
+
+\subsection{Chiffres clés}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{ll}
+\toprule
+\textbf{Indicateur} & \textbf{Valeur} \\
+\midrule
+Année de création & 2012 \\
+Forme juridique & SAS au capital de 250~000~\euro{} \\
+Siège social & 42, avenue Jean Jaurès -- 31000 Toulouse \\
+Agences & Lyon (2016), Paris (2018), Bordeaux (2021) \\
+Chiffre d'affaires 2023 & 14,8~M\euro{} \\
+Effectif & 92 collaborateurs \\
+Certifications & ISO~27001, ISO~9001, Qualiopi \\
+\bottomrule
+\end{tabular}
+\caption{Chiffres clés de ToshiHaut SAS}
+\end{table}
+
+Depuis sa création, ToshiHaut enregistre une croissance annuelle moyenne de 18\%. Cette dynamique repose sur la fidélisation de nos clients historiques (taux de renouvellement de 87\%) et sur notre capacité à répondre à des projets d'envergure dans les secteurs de la logistique, de l'industrie et du commerce.
+
+\subsection{Nos métiers}
+
+Notre activité s'articule autour de quatre pôles de compétences complémentaires :
+
+\begin{description}[style=nextline]
+\item[Pôle Infrastructure et Datacenter] Conception, déploiement et exploitation d'infrastructures serveurs, de solutions de virtualisation (VMware, Hyper-V, Proxmox), de systèmes de stockage (SAN, NAS) et de plans de reprise d'activité. Ce pôle représente 35\% de notre activité.
+
+\item[Pôle Réseau et Sécurité] Architecture et mise en oeuvre de réseaux LAN, WAN, SD-WAN, Wi-Fi, ainsi que la sécurisation des flux par des solutions de firewalling, de segmentation et de contrôle d'accès réseau (802.1X). Ce pôle représente 30\% de notre activité.
+
+\item[Pôle Téléphonie et Communications Unifiées] Déploiement de solutions de téléphonie sur IP, de messagerie unifiée et de visioconférence. Nous sommes partenaire certifié 3CX et Alcatel-Lucent Enterprise. Ce pôle représente 15\% de notre activité.
+
+\item[Pôle Conseil et Accompagnement] Audit d'infrastructures, schéma directeur, assistance à maîtrise d'ouvrage, et accompagnement au changement. Ce pôle représente 20\% de notre activité.
+\end{description}
+
+\section{L'équipe projet dédiée}
+
+Pour répondre à un projet de cette envergure, ToshiHaut constitue une équipe projet dédiée rassemblant les compétences nécessaires à la réussite de l'ensemble des lots. Cette équipe sera pilotée par un chef de projet unique, interlocuteur privilégié de la société BOOM tout au long du marché.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+  every node/.style={draw, rounded corners, minimum width=3.2cm, minimum height=1cm, align=center, font=\small},
+  level 1/.style={sibling distance=4.5cm},
+  edge from parent/.style={draw, -Stealth, thick, thbleu},
+  dir/.style={fill=thbleu, text=white, font=\small\bfseries},
+  chef/.style={fill=thorange, text=white, font=\small\bfseries},
+  tech/.style={fill=thbleu!15, text=thbleu},
+]
+  \node[dir] (dg) {Antoine Mercier\\Directeur Général}
+    child {node[dir] (dt) {Sophie Laurent\\Directrice Technique}
+      child {node[chef] (cp) {Julien Dubois\\Chef de Projet}}
+    };
+  \node[tech, below left=1.5cm and -0.5cm of cp] (rs) {Thomas Bernard\\Resp. Réseau};
+  \node[tech, below=1.5cm of cp] (is) {Camille Martin\\Ing. Systèmes};
+  \node[tech, below right=1.5cm and -0.5cm of cp] (it) {Marc Lefèvre\\Ing. Télécom};
+  \node[tech, below=1.2cm of rs] (t1) {3 Techniciens\\Déploiement};
+  \node[tech, below=1.2cm of is] (t2) {2 Techniciens\\Systèmes};
+  \node[tech, below=1.2cm of it] (t3) {2 Techniciens\\Câblage};
+  \draw[-Stealth, thick, thbleu] (cp) -- (rs);
+  \draw[-Stealth, thick, thbleu] (cp) -- (is);
+  \draw[-Stealth, thick, thbleu] (cp) -- (it);
+  \draw[-Stealth, thick, thbleu] (rs) -- (t1);
+  \draw[-Stealth, thick, thbleu] (is) -- (t2);
+  \draw[-Stealth, thick, thbleu] (it) -- (t3);
+\end{tikzpicture}
+\caption{Organigramme de l'équipe projet ToshiHaut pour le marché BOOM}
+\label{fig:organigramme}
+\end{figure}
+
+\subsection{Profils des intervenants clés}
+
+\textbf{Antoine Mercier -- Directeur Général et sponsor du projet}
+
+Diplômé de l'ENSEEIHT Toulouse (promotion 2005), Antoine a passé sept ans chez Capgemini en tant qu'architecte infrastructure avant de co-fonder ToshiHaut en 2012. Il assure le pilotage stratégique du projet et sera le garant de l'engagement de ToshiHaut auprès de la direction générale de BOOM. Il intervient lors des comités de pilotage trimestriels.
+
+\textbf{Sophie Laurent -- Directrice Technique}
+
+Ingénieure INSA Lyon (promotion 2007), Sophie dispose de quinze ans d'expérience en architecture de systèmes d'information. Avant de co-fonder ToshiHaut, elle a exercé chez SCC France en tant que responsable du pôle datacenter. Elle valide l'ensemble des choix techniques et garantit la cohérence architecturale de la solution proposée.
+
+\textbf{Julien Dubois -- Chef de Projet}
+
+Titulaire d'un Master en gestion de projets informatiques (Université Toulouse III), Julien possède huit ans d'expérience en conduite de projets d'infrastructure. Il a piloté avec succès le déploiement de l'infrastructure de LogiFrance (18 sites, 1200 utilisateurs) en 2022. Certifié PMP et ITIL v4, il sera l'interlocuteur unique de BOOM pour le suivi opérationnel du projet.
+
+\textbf{Thomas Bernard -- Responsable Réseau}
+
+CCNP Entreprise et certifié Fortinet NSE7, Thomas cumule dix ans d'expérience en conception et administration de réseaux d'entreprise. Il a conçu l'architecture WAN SD-WAN de ChimExpress (25 sites) et maîtrise les environnements multi-sites à contraintes de disponibilité élevées.
+
+\textbf{Camille Martin -- Ingénieure Systèmes}
+
+Certifiée VMware VCP-DCV et ayant une solide expérience sur les environnements IBM Power (AS/400, IBM~i), Camille est responsable de la conception de l'infrastructure de virtualisation et de stockage. Elle a mené la migration d'un parc de 200 machines virtuelles vers une architecture hyperconvergée pour le compte de FroidLogistic.
+
+\textbf{Marc Lefèvre -- Ingénieur Télécom}
+
+Spécialiste des solutions de téléphonie sur IP et de communications unifiées, Marc est certifié 3CX Advanced et possède une expertise reconnue sur les déploiements DECT en environnement industriel. Il a déployé la téléphonie de la plateforme logistique de TransNord (600 postes, couverture DECT entrepôt).
+
+\section{Nos références clients}
+
+ToshiHaut intervient régulièrement dans le secteur de la logistique et de l'industrie, secteurs aux contraintes similaires à celles de BOOM : sites géographiquement dispersés, continuité de service critique, environnements industriels exigeants, et systèmes métiers spécifiques.
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{L{2.8cm}L{2.2cm}L{4cm}L{2cm}R{2cm}}
+\toprule
+\textbf{Client} & \textbf{Secteur} & \textbf{Périmètre} & \textbf{Année} & \textbf{Montant} \\
+\midrule
+LogiFrance & Logistique & Infra complète 18 sites, 1200 postes, WAN MPLS, datacenter & 2022-2023 & 3,2~M\euro{} \\
+\addlinespace
+ChimExpress & Chimie / Transport & Réseau WAN SD-WAN 25 sites, firewalling, WiFi industriel & 2021-2022 & 1,8~M\euro{} \\
+\addlinespace
+FroidLogistic & Logistique froid & Migration datacenter, virtualisation 200 VM, PRA & 2023 & 1,1~M\euro{} \\
+\addlinespace
+AgroSud & Agroalimentaire & Câblage et réseau 8 entrepôts, WiFi, téléphonie & 2022 & 0,9~M\euro{} \\
+\addlinespace
+TransNord & Transport & Téléphonie IP 600 postes, DECT entrepôt, SIP trunking & 2023 & 0,4~M\euro{} \\
+\bottomrule
+\end{tabularx}
+\caption{Principales références de ToshiHaut dans le secteur logistique et industriel}
+\label{tab:references}
+\end{table}
+
+Nous tenons à la disposition de BOOM les coordonnées de nos clients référents pour toute prise de contact directe.
+
+\section{Nos partenaires technologiques}
+
+La qualité de nos prestations repose également sur des partenariats solides avec les principaux constructeurs et éditeurs du marché. Ces partenariats nous garantissent un accès prioritaire au support technique, à la formation continue de nos équipes, et à des conditions tarifaires compétitives.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{lll}
+\toprule
+\textbf{Partenaire} & \textbf{Domaine} & \textbf{Niveau} \\
+\midrule
+Cisco Systems & Réseau, WiFi & Gold Partner \\
+Fortinet & Sécurité réseau & Expert Partner \\
+Dell Technologies & Serveurs, Stockage & Titanium Partner \\
+VMware (Broadcom) & Virtualisation & Advanced Partner \\
+Veeam & Sauvegarde & Silver Partner \\
+3CX & Téléphonie IP & Platinum Partner \\
+Yealink & Postes téléphoniques & Authorized Partner \\
+Zebra Technologies & Terminaux industriels & Registered Partner \\
+\bottomrule
+\end{tabular}
+\caption{Partenariats technologiques de ToshiHaut}
+\label{tab:partenaires}
+\end{table}
+
+\section{Notre méthodologie projet}
+
+ToshiHaut applique une méthodologie projet éprouvée, inspirée du référentiel PRINCE2 et adaptée aux spécificités des déploiements d'infrastructure. Notre approche se structure en cinq phases :
+
+\begin{enumerate}
+\item \textbf{Phase d'étude détaillée (Cadrage)} -- Audit des installations existantes, recueil précis des besoins par service, levée des contraintes techniques (accès sites, fenêtres de maintenance), validation du design avec les équipes BOOM.
+
+\item \textbf{Phase de conception (Design)} -- Production des documents d'architecture détaillés (HLD et LLD), choix définitifs des équipements, maquettage en laboratoire pour valider les configurations critiques (AS/400, multicast vidéosurveillance, WiFi entrepôt).
+
+\item \textbf{Phase pilote} -- Déploiement complet sur un site représentatif (un centre de stockage) afin de valider la solution en conditions réelles avant la généralisation. Le retour d'expérience du pilote permet d'ajuster les configurations et les procédures.
+
+\item \textbf{Phase de déploiement (Rollout)} -- Déploiement progressif par vagues de sites, en commençant par les sites les moins critiques. Chaque vague fait l'objet d'une recette avant le passage à la suivante.
+
+\item \textbf{Phase de transfert et garantie (Hypercare)} -- Transfert de compétences aux équipes IT de BOOM, remise de la documentation complète, et période de garantie de trois mois avec support renforcé.
+\end{enumerate}
+
+Des comités de pilotage mensuels et des points de suivi hebdomadaires garantissent une communication constante avec les équipes BOOM tout au long du projet.
+
+\section{Nos engagements qualité}
+
+ToshiHaut est certifiée ISO~9001:2015 pour ses activités de conception et déploiement d'infrastructures informatiques. Cette certification traduit notre engagement dans une démarche d'amélioration continue qui se décline concrètement dans ce projet par :
+
+\begin{itemize}
+\item Un suivi rigoureux des indicateurs projet (avancement, qualité, risques) via notre outil de gestion de projet interne ;
+\item Des procédures de recette formalisées avec des PV de recette co-signés par ToshiHaut et BOOM ;
+\item Une traçabilité complète des interventions via un système de ticketing partagé ;
+\item La production systématique d'un dossier d'ouvrage exécuté (DOE) à la livraison de chaque lot ;
+\item Des enquêtes de satisfaction à chaque jalon du projet.
+\end{itemize}
+
+Notre certification ISO~27001:2022 garantit par ailleurs que les données et informations de BOOM seront manipulées dans le respect des meilleures pratiques de sécurité de l'information tout au long du projet.
+
+
+% ============================================================
+% CHAPITRE 2 : ANALYSE DU BESOIN
+% ============================================================
+\chapter{Analyse du besoin}
+
+\section{Compréhension du contexte}
+
+La société BOOM occupe une position de premier plan sur le marché français du stockage, de la préparation et de la livraison de produits chimiques et de marchandises nécessitant une chaîne du froid. Avec un chiffre d'affaires de 800~M\euro{} et un effectif de 2500 personnes répartis sur 21 sites, BOOM opère dans un environnement à forte criticité où la continuité d'activité constitue un enjeu majeur.
+
+L'infrastructure informatique actuelle de BOOM, bien que fonctionnelle, arrive en fin de vie et ne répond plus aux exigences de performance, de sécurité et d'évolutivité nécessaires pour accompagner la croissance de l'entreprise et les transformations à venir. Le présent appel d'offres porte sur le remplacement complet de cette infrastructure, câblage compris, ainsi que le remplacement de l'ensemble des liaisons inter-sites.
+
+\subsection{Les sites de BOOM}
+
+L'infrastructure de BOOM s'articule autour de trois types de sites distincts, chacun présentant des besoins et des contraintes spécifiques :
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{L{3cm}C{1.5cm}L{4cm}L{5cm}}
+\toprule
+\textbf{Type de site} & \textbf{Nombre} & \textbf{Caractéristiques} & \textbf{Contraintes} \\
+\midrule
+Centre de stockage & 6 & Entrepôt $\sim$60\,000~m\up{2}, plateau admin 250 postes, zone camions & SEVESO, froid négatif/positif, vidéosurveillance lourde (200 caméras), 24h/24 \\
+\addlinespace
+Centre de tri & 12 & Entrepôt $\sim$15\,000~m\up{2}, bureaux & Vidéosurveillance (50 caméras), picking intensif \\
+\addlinespace
+Plateau de bureau & 3 & Bureaux $\sim$3\,000~m\up{2}, dont 1 siège social & Support client 24/7, PC sécurité au siège (30 caméras) \\
+\bottomrule
+\end{tabularx}
+\caption{Typologie des sites BOOM}
+\label{tab:sites}
+\end{table}
+
+\subsection{Les services et leurs besoins}
+
+La diversité des métiers présents chez BOOM se traduit par des besoins informatiques variés que nous avons analysés et synthétisés dans le tableau suivant :
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{L{2.5cm}C{1.2cm}L{3.5cm}L{5.5cm}}
+\toprule
+\textbf{Service} & \textbf{Effectif} & \textbf{Localisation} & \textbf{Équipements nécessaires} \\
+\midrule
+Support client & 100 & 3 plateaux & PC fixe, 2 écrans 27", téléphone + casque \\
+\addlinespace
+Moyens généraux & 140 & Tous sites & Portable durci, DECT, mobile. 10 resp. : + écran 27" + tél. fixe \\
+\addlinespace
+Préparateurs & 800 & Stockage + tri & 120 PC chariots durcis, terminaux code-barres WiFi \\
+\addlinespace
+ADV & 100 & Sites + plateaux & PC fixe, 2 écrans 27", téléphone + casque \\
+\addlinespace
+Transport & 600 & Tous sites + terrain & 500 smartphones durcis (chauffeurs), 100 postes admin \\
+\addlinespace
+Sécurité & 200 & Tous sites & Smartphone, radio TETRA (hors marché). 5 dir. : portable + écran \\
+\addlinespace
+Commercial & 80 & Terrain + plateaux & Portable, smartphone \\
+\addlinespace
+Administratif & 500 & Tous sites & 80\% : fixe + 2 écrans. 20\% : portable + écran \\
+\bottomrule
+\end{tabularx}
+\caption{Synthèse des besoins par service}
+\label{tab:besoins_services}
+\end{table}
+
+\section{Enjeux identifiés}
+
+L'analyse du cahier des charges et de l'environnement de BOOM nous permet d'identifier cinq enjeux majeurs que notre proposition technique s'attache à adresser :
+
+\subsection{Continuité de service et haute disponibilité}
+
+BOOM opère en 24h/24 et 7j/7 sur ses activités de support client et de transport. L'arrêt même temporaire des systèmes informatiques entraînerait une désorganisation des tournées de livraison, une impossibilité de traiter les commandes clients et potentiellement des ruptures dans la chaîne du froid, avec des conséquences financières et réglementaires majeures. Notre architecture doit donc garantir une haute disponibilité à tous les niveaux : serveurs, réseau, stockage et liaisons WAN.
+
+\subsection{Sécurité et conformité SEVESO}
+
+Les sites de stockage de BOOM sont classés SEVESO en raison de la dangerosité de certains produits manipulés. Cette classification impose des exigences strictes en matière de traçabilité des accès, de vidéosurveillance et de communication de sécurité. Notre infrastructure réseau doit supporter ces exigences en fournissant des réseaux dédiés et segmentés pour la vidéosurveillance (avec support du multicast inter-sites), les badgeuses (PoE) et l'interopérabilité avec le réseau radio TETRA existant.
+
+\subsection{Performance et couverture réseau en environnement industriel}
+
+Les entrepôts de BOOM présentent des dimensions considérables (jusqu'à 190 mètres par 320 mètres) et des conditions d'exploitation difficiles pour les réseaux sans fil : structures métalliques (rayonnages), variations de température (zones froid négatif à $-25$°C, froid positif à $+2$°C), et forte densité d'équipements mobiles (chariots gerbeurs, terminaux code-barres). La couverture WiFi de ces espaces constitue un défi technique que nous adressons par un dimensionnement soigneux et le choix de matériels adaptés.
+
+\subsection{Intégration des systèmes existants}
+
+La cartographie applicative de BOOM révèle un socle historique construit autour de deux AS/400 (IBM~i) qui pilotent les opérations logistiques critiques (gestion des stocks, préparation des commandes, interface chauffeurs). Ces systèmes doivent être intégrés de manière transparente dans la nouvelle infrastructure, en garantissant les performances d'accès (latence faible) pour les applications temps réel utilisées dans les entrepôts.
+
+L'environnement applicatif inclut par ailleurs un parc de machines virtuelles conséquent (plus de 50 VM totalisant environ 250 vCPU et 1,3~To de RAM) qu'il conviendra d'héberger sur une plateforme de virtualisation moderne, performante et évolutive.
+
+\subsection{Maîtrise des coûts et évolutivité}
+
+Avec un périmètre de 21 sites et 2500 utilisateurs, le dimensionnement de l'infrastructure doit concilier performance et maîtrise budgétaire. Nous avons conçu notre proposition en recherchant le meilleur rapport qualité-prix pour chaque composant, tout en prévoyant des capacités d'évolution suffisantes pour accompagner la croissance de BOOM sur les cinq prochaines années sans remplacement prématuré des équipements.
+
+\section{Périmètre de la prestation}
+
+\subsection{Inclus dans le marché}
+
+La prestation proposée par ToshiHaut couvre les lots suivants :
+
+\begin{itemize}
+\item \textbf{LOT 1 -- Infrastructure c\oe ur (Datacenter)} : hébergement, serveurs de virtualisation, stockage, sauvegarde, plan de reprise d'activité, prise en charge des AS/400 ;
+\item \textbf{LOT 2 -- Réseau} : c\oe ur de réseau datacenter, commutation LAN sur l'ensemble des sites, câblage courant faible, liaisons WAN (MPLS + Internet), firewalling et sécurité réseau ;
+\item \textbf{LOT 3 -- WiFi} : couverture WiFi de l'ensemble des sites avec administration centralisée ;
+\item \textbf{LOT 4 -- Téléphonie} : solution de téléphonie sur IP, postes téléphoniques, DECT, SIP trunking ;
+\item \textbf{LOT 5 -- Postes de travail et terminaux} : ordinateurs fixes et portables, écrans, terminaux durcis (chariots, code-barres), smartphones ;
+\item \textbf{LOT 6 -- Services} : étude détaillée, gestion de projet, déploiement, migration, formation, documentation ;
+\item \textbf{LOT 7 -- Maintenance et support} : contrats de maintenance sur 3 ans, astreinte 24/7.
+\end{itemize}
+
+\subsection{Exclusions}
+
+Conformément au cahier des charges, les éléments suivants ne font pas partie du présent marché mais sont pris en compte dans la conception de l'infrastructure réseau qui les supporte :
+
+\begin{itemize}
+\item Les caméras de vidéosurveillance et les enregistreurs associés (réseau dédié fourni) ;
+\item Le réseau radio TETRA et les terminaux radio ;
+\item Les badgeuses (réseau dédié PoE fourni, serveur hébergé en VM) ;
+\item Les logiciels applicatifs et leurs licences (hors infrastructure d'hébergement) ;
+\item Le mobilier de bureau et l'aménagement des locaux techniques (hors baies de brassage).
+\end{itemize}
+
+
+% ============================================================
+% CHAPITRE 3 : INFRASTRUCTURE COEUR
+% ============================================================
+\chapter{Infrastructure c\oe ur -- Datacenter}
+
+\section{Stratégie d'hébergement}
+
+Compte tenu de la criticité des systèmes de BOOM (activité 24/7, sites SEVESO, flotte en mouvement permanent), nous recommandons une stratégie d'hébergement en datacenter professionnel plutôt qu'un hébergement dans les locaux de BOOM. Cette approche offre des garanties supérieures en termes de sécurité physique, de redondance électrique, de climatisation et de connectivité réseau.
+
+\subsection{Datacenter principal -- Equinix TH2 (Toulouse)}
+
+Le datacenter principal sera hébergé chez Equinix à Toulouse (site TH2), un datacenter certifié Tier~III qui offre :
+
+\begin{itemize}
+\item Redondance électrique N+1 avec onduleurs et groupes électrogènes ;
+\item Climatisation N+1 avec gestion du confinement chaud/froid ;
+\item Sécurité physique 24/7 (vidéosurveillance, contrôle d'accès biométrique, gardiennage) ;
+\item Connectivité multi-opérateurs avec accès direct au GIX de Toulouse ;
+\item SLA de disponibilité de 99,99\%.
+\end{itemize}
+
+Nous prévoyons la location de \textbf{3 baies 42U} dans une cage dédiée, avec une puissance électrique totale de 15~kW (5~kW par baie).
+
+\subsection{Datacenter secondaire (PRA) -- SFR Netcenter (Lyon)}
+
+Pour le plan de reprise d'activité, nous avons sélectionné le datacenter SFR Netcenter de Lyon (certifié Tier~III+), situé à plus de 250~km du site principal. Cette distance géographique garantit une indépendance vis-à-vis des risques régionaux (catastrophe naturelle, coupure réseau de collecte). Nous y prévoyons \textbf{1 baie 42U} avec 5~kW de puissance.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+  dc/.style={draw, thick, rounded corners, minimum width=4.5cm, minimum height=2.8cm, align=center, fill=thbleu!10, font=\small},
+  site/.style={draw, rounded corners, minimum width=2.8cm, minimum height=1.2cm, align=center, fill=thorange!15, font=\footnotesize},
+  wan/.style={draw, thick, rounded corners, fill=thgris, minimum width=3.5cm, minimum height=1.5cm, align=center},
+  lien/.style={-Stealth, thick, thbleu},
+  repl/.style={-Stealth, thick, dashed, red!70!black},
+]
+  % Datacenters
+  \node[dc] (dc1) at (0,0) {\textbf{DC Principal}\\Equinix TH2\\Toulouse\\3 baies -- 15 kW};
+  \node[dc] (dc2) at (9,0) {\textbf{DC Secours}\\SFR Netcenter\\Lyon\\1 baie -- 5 kW};
+
+  % Réplication
+  \draw[repl] (dc1.east) -- node[above, font=\footnotesize, red!70!black] {Réplication} node[below, font=\footnotesize, red!70!black] {asynchrone} (dc2.west);
+
+  % WAN
+  \node[wan] (mpls) at (4.5,-4) {\textbf{Réseau WAN}\\MPLS + Internet\\SD-WAN};
+
+  % Liens DC-WAN
+  \draw[lien] (dc1.south) -- ++(0,-1) -| (mpls.north west);
+  \draw[lien] (dc2.south) -- ++(0,-1) -| (mpls.north east);
+
+  % Sites
+  \node[site] (sa) at (-2,-7.5) {6 Centres\\de stockage};
+  \node[site] (sb) at (2.5,-7.5) {12 Centres\\de tri};
+  \node[site] (sc) at (7,-7.5) {3 Plateaux\\de bureau};
+  \node[site] (sd) at (11,-7.5) {Flotte\\mobile};
+
+  \draw[lien] (mpls.south) -- ++(0,-0.8) -| (sa.north);
+  \draw[lien] (mpls.south) -- ++(0,-0.8) -| (sb.north);
+  \draw[lien] (mpls.south) -- ++(0,-0.8) -| (sc.north);
+  \draw[lien] (mpls.south) -- ++(0,-0.8) -| (sd.north);
+\end{tikzpicture}
+\caption{Architecture globale -- Hébergement et interconnexion des sites}
+\label{fig:archi_globale}
+\end{figure}
+
+\section{Architecture de virtualisation}
+
+\subsection{Choix de la plateforme}
+
+Nous proposons une architecture de virtualisation basée sur \textbf{VMware vSphere 8} (Standard Edition), qui constitue la référence du marché pour les environnements de production critiques. Ce choix se justifie par :
+
+\begin{itemize}
+\item La maturité et la fiabilité éprouvée de la plateforme en environnement de production ;
+\item La compatibilité native avec les outils de sauvegarde (Veeam) et de réplication ;
+\item La richesse fonctionnelle : vMotion (migration à chaud), DRS (répartition dynamique de charge), HA (haute disponibilité automatique) ;
+\item Les compétences existantes au sein de l'équipe informatique de BOOM (10 techniciens, 2 administrateurs systèmes).
+\end{itemize}
+
+La plateforme sera administrée via \textbf{vCenter Server Standard}, déployé en appliance virtuelle sur le cluster de production.
+
+\subsection{Dimensionnement}
+
+L'analyse de la cartographie applicative fournie dans le cahier des charges nous permet de consolider les besoins en ressources de calcul :
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{L{4.5cm}C{1.5cm}R{1.5cm}R{1.8cm}R{1.8cm}}
+\toprule
+\textbf{Application} & \textbf{Nb VM} & \textbf{vCPU} & \textbf{RAM (Go)} & \textbf{SSD (Go)} \\
+\midrule
+Support client (Linux) & 6 & 36 & 96 & 2\,048 \\
+Suivi de flotte & 2 & 16 & 64 & 1\,024 \\
+Sage 50 Extra & 2 & 8 & 48 & 1\,024 \\
+Navision ERP & 1 & 4 & 16 & 200 \\
+Suivi conformité + SQL & 4 & 24 & 128 & 2\,048 \\
+Interface AS/400 smartphone & 8 & 32 & 224 & 2\,048 \\
+SAGE RH & 4 & 8 & 32 & 400 \\
+SAGE Paie & 2 & 12 & 48 & 1\,024 \\
+Notes de frais & 2 & 12 & 48 & 1\,024 \\
+Logiciel virement & 1 & 2 & 16 & 100 \\
+EDI clients & 1 & 2 & 16 & 100 \\
+EDI facturation & 1 & 2 & 16 & 100 \\
+DOCUWARE & 1 & 16 & 128 & 2\,048 \\
+Nextcloud & 1 & 16 & 64 & 10\,240 \\
+Qlik & 2 & 8 & 32 & 200 \\
+Exchange & 2 & 32 & 256 & 400 \\
+Registre entrées/sorties & 2 & 2 & 16 & 100 \\
+Sous-traitance smartphone & 2 & 2 & 16 & 100 \\
+RDS AS/400 & 4 & 16 & 64 & 400 \\
+Infrastructure (AD, DNS, DHCP, NPS, supervision) & 6 & 12 & 48 & 600 \\
+\midrule
+\textbf{TOTAL} & \textbf{54} & \textbf{254} & \textbf{1\,376} & \textbf{25\,228} \\
+\bottomrule
+\end{tabularx}
+\caption{Consolidation des besoins en ressources de virtualisation}
+\label{tab:vm_sizing}
+\end{table}
+
+En appliquant un ratio de surprovisionnement de 1,3 sur les vCPU et de 1,2 sur la RAM (pour les pics de charge et la croissance à 3 ans), les besoins réels s'établissent à :
+
+\begin{itemize}
+\item \textbf{vCPU} : $254 \times 1{,}3 = 330$ vCPU, soit $\sim$165 c\oe urs physiques (avec hyperthreading)
+\item \textbf{RAM} : $1\,376 \times 1{,}2 = 1\,651$~Go, soit $\sim$1,7~To
+\item \textbf{Stockage SSD} : $\sim$25~To + 20\% marge = $\sim$30~To
+\end{itemize}
+
+\section{Architecture serveurs}
+
+Pour répondre à ces besoins, nous proposons un cluster VMware composé de \textbf{4 serveurs Dell PowerEdge R760} en production et de \textbf{2 serveurs identiques} sur le site de PRA.
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{L{4cm}L{9cm}}
+\toprule
+\textbf{Composant} & \textbf{Spécification} \\
+\midrule
+Modèle & Dell PowerEdge R760 (rack 2U) \\
+Processeurs & 2$\times$ Intel Xeon Gold 6438Y (32 c\oe urs / 64 threads, 2.0~GHz) \\
+Mémoire & 512~Go DDR5-4800 (16$\times$32~Go RDIMM) \\
+Stockage local & 2$\times$ SSD 960~Go RAID~1 (OS + swap ESXi) \\
+Réseau & 2$\times$ carte 25~GbE dual-port (4 ports 25G par serveur) \\
+Alimentation & 2$\times$ PSU 1400W redondantes \\
+Gestion & iDRAC 9 Enterprise (administration à distance) \\
+\bottomrule
+\end{tabularx}
+\caption{Configuration des serveurs Dell PowerEdge R760}
+\label{tab:serveurs}
+\end{table}
+
+\textbf{Capacité totale du cluster de production (4 serveurs)} :
+\begin{itemize}
+\item 256 c\oe urs physiques / 512 threads $\rightarrow$ largement dimensionné pour 330 vCPU ;
+\item 2\,048~Go de RAM $\rightarrow$ marge confortable par rapport aux 1\,651~Go nécessaires ;
+\item Tolérance de panne N+1 : en cas de perte d'un serveur, les 3 restants (192 c\oe urs, 1\,536~Go RAM) absorbent la charge.
+\end{itemize}
+
+\subsection{Prise en charge des AS/400 (IBM~i)}
+
+Les deux AS/400 existants de BOOM (16U, 3~kW chacun) seront hébergés dans le datacenter principal, dans une baie dédiée. Ces machines étant des systèmes IBM Power, elles nécessitent un traitement spécifique :
+
+\begin{itemize}
+\item \textbf{Alimentation} : les 3~kW par machine (6~kW au total) sont pris en compte dans le dimensionnement électrique des baies (15~kW total) ;
+\item \textbf{Réseau} : connexion directe au c\oe ur de réseau datacenter en 10~GbE pour garantir une latence minimale avec les VM applicatives (interface smartphone, RDS, ERP) ;
+\item \textbf{Protocoles} : support du protocole TN5250 sur TCP/IP pour l'accès des terminaux et des applications. Si des flux IPX/SPX legacy existent encore, nous configurerons un encapsulation IPX-over-IP ou procéderons à la migration vers TCP/IP pur en coordination avec les développeurs de BOOM ;
+\item \textbf{Sauvegarde} : intégration dans la politique de sauvegarde via les outils natifs IBM (BRMS) avec externalisation vers le système Veeam.
+\end{itemize}
+
+\section{Solution de stockage}
+
+\subsection{Architecture SAN}
+
+Le stockage de production sera assuré par une baie \textbf{Dell PowerStore 1200T}, solution de stockage unifié (bloc + fichier) offrant des performances élevées en full-flash et une capacité d'extension importante.
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{L{4cm}L{9cm}}
+\toprule
+\textbf{Composant} & \textbf{Spécification} \\
+\midrule
+Modèle & Dell PowerStore 1200T \\
+Contrôleurs & 2 (actif-actif) \\
+Stockage SSD & 25$\times$ 3,84~To NVMe = 96~To raw ($\sim$65~To utile après RAID) \\
+Performance & 1\,000\,000 IOPS, latence $<$0,3~ms \\
+Connectivité & 4$\times$ 25~GbE iSCSI par contrôleur \\
+Réplication & Réplication asynchrone native vers le site PRA \\
+Protocoles & iSCSI, NFS, SMB \\
+\bottomrule
+\end{tabularx}
+\caption{Configuration du stockage Dell PowerStore 1200T}
+\label{tab:stockage}
+\end{table}
+
+La capacité utile de 65~To couvre largement les 30~To de stockage SSD nécessaires pour les VM, avec une marge de croissance de plus de 100\%.
+
+\subsection{Stockage capacitif (données froides)}
+
+Pour les besoins de stockage capacitif (partage de fichiers Nextcloud : 40~To, DOCUWARE : 30~To, Exchange : 50~To, Qlik : 20~To, soit 140~To au total), nous ajoutons une étagère d'extension \textbf{Dell PowerStore Expansion} équipée de disques NL-SAS de forte capacité :
+
+\begin{itemize}
+\item 25$\times$ disques NL-SAS 8~To = 200~To raw ($\sim$160~To utile) ;
+\item Tiering automatique entre les SSD et les disques NL-SAS géré nativement par le PowerStore ;
+\item Les données fréquemment accédées sont automatiquement promues sur le tier SSD.
+\end{itemize}
+
+\section{Sauvegarde}
+
+\subsection{Politique de sauvegarde}
+
+Nous proposons une politique de sauvegarde basée sur la règle du 3-2-1 :
+
+\begin{itemize}
+\item \textbf{3 copies} des données (production + sauvegarde locale + sauvegarde externalisée) ;
+\item \textbf{2 supports} différents (disque + bande) ;
+\item \textbf{1 copie} hors site (datacenter PRA de Lyon).
+\end{itemize}
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{L{2.5cm}C{2cm}C{2cm}C{2cm}C{2cm}}
+\toprule
+\textbf{Type} & \textbf{Fréquence} & \textbf{Rétention} & \textbf{Cible} & \textbf{RPO} \\
+\midrule
+Complète & Hebdomadaire & 5 semaines & Disque + Bande & 7 jours \\
+Incrémentale & Quotidienne & 30 jours & Disque & 24 heures \\
+AS/400 (BRMS) & Quotidienne & 30 jours & Disque & 24 heures \\
+Externalisation & Hebdomadaire & 12 semaines & DC Lyon (bande) & 7 jours \\
+\bottomrule
+\end{tabularx}
+\caption{Politique de sauvegarde}
+\label{tab:sauvegarde}
+\end{table}
+
+\subsection{Solution technique}
+
+La solution de sauvegarde repose sur \textbf{Veeam Backup \& Replication v12} (Enterprise Plus), qui offre :
+
+\begin{itemize}
+\item Sauvegarde à chaud des VM VMware (sans interruption de service via les snapshots) ;
+\item Déduplication et compression des données (ratio moyen de 2:1) ;
+\item Vérification automatique de la restaurabilité des sauvegardes (SureBackup) ;
+\item Restauration granulaire (fichier, objet Exchange, base SQL) ;
+\item Réplication des VM critiques vers le site PRA.
+\end{itemize}
+
+Les sauvegardes sur disque sont stockées sur un \textbf{NAS Synology RS3621RPxs+} équipé de 12 disques de 16~To (192~To raw, $\sim$160~To utile en RAID~6). Les sauvegardes mensuelles sont archivées sur un \textbf{robot de bandes Dell PowerVault TL1000} avec des cartouches LTO-9 (18~To natif par cartouche).
+
+\section{Plan de Reprise d'Activité (PRA)}
+
+\subsection{Objectifs du PRA}
+
+Le PRA est conçu pour protéger BOOM contre la perte totale du datacenter principal (sinistre majeur, incendie, inondation). Les objectifs fixés sont :
+
+\begin{itemize}
+\item \textbf{RPO (Recovery Point Objective)} : 4 heures pour les applications critiques (AS/400, interface transport, support client), 24 heures pour les applications secondaires ;
+\item \textbf{RTO (Recovery Time Objective)} : 4 heures pour les applications critiques, 24 heures pour le reste.
+\end{itemize}
+
+\subsection{Architecture du PRA}
+
+Le site de PRA (SFR Netcenter Lyon) héberge :
+
+\begin{itemize}
+\item \textbf{2 serveurs Dell PowerEdge R760} (configuration identique à la production) formant un cluster VMware de secours ;
+\item \textbf{1 baie Dell PowerStore 500T} (stockage réduit, 12$\times$3,84~To SSD) recevant la réplication asynchrone depuis le site principal ;
+\item Les répliques des VM critiques, maintenues à jour par Veeam Replication (intervalle de 4 heures).
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+  serveur/.style={draw, thick, fill=thbleu!10, minimum width=2cm, minimum height=0.6cm, font=\footnotesize, rounded corners},
+  stockage/.style={draw, thick, fill=thorange!15, minimum width=2.5cm, minimum height=1.2cm, font=\footnotesize, align=center, rounded corners},
+  baie/.style={draw, thick, dashed, rounded corners, inner sep=10pt},
+  fleche/.style={-Stealth, thick},
+]
+  % DC Principal
+  \node[font=\bfseries\small, thbleu] at (0,4.5) {DC Principal -- Toulouse};
+  \node[serveur] (s1) at (-1.5,3.5) {Serveur 1};
+  \node[serveur] (s2) at (-1.5,2.7) {Serveur 2};
+  \node[serveur] (s3) at (-1.5,1.9) {Serveur 3};
+  \node[serveur] (s4) at (-1.5,1.1) {Serveur 4};
+  \node[stockage] (st1) at (1.5,2.3) {PowerStore\\1200T\\96 To SSD};
+  \node[serveur] (as1) at (0,0) {AS/400 \#1};
+  \node[serveur] (as2) at (2.5,0) {AS/400 \#2};
+  \node[baie, fit=(s1)(s2)(s3)(s4)(st1)(as1)(as2), label=above:{}] (dcprin) {};
+
+  % DC PRA
+  \node[font=\bfseries\small, thbleu] at (9,4.5) {DC Secours -- Lyon};
+  \node[serveur] (s5) at (7.5,3.5) {Serveur 5};
+  \node[serveur] (s6) at (7.5,2.7) {Serveur 6};
+  \node[stockage] (st2) at (10.5,3.1) {PowerStore\\500T\\46 To SSD};
+  \node[baie, fit=(s5)(s6)(st2), label=above:{}] (dcpra) {};
+
+  % Réplication
+  \draw[fleche, red!70!black, dashed] (st1.east) -- node[above, font=\footnotesize] {Réplication SAN} node[below, font=\footnotesize] {asynchrone (4h)} (st2.west);
+  \draw[fleche, thorange, dashed] ([yshift=-5pt]dcprin.east) -- node[below, font=\footnotesize, yshift=-3pt] {Veeam Replication} ([yshift=-5pt]dcpra.west);
+\end{tikzpicture}
+\caption{Architecture du Plan de Reprise d'Activité}
+\label{fig:pra}
+\end{figure}
+
+\subsection{Procédure de bascule}
+
+En cas de sinistre sur le datacenter principal, la procédure de bascule se déroule comme suit :
+
+\begin{enumerate}
+\item Constatation de l'indisponibilité du DC principal (alerte automatique de supervision + validation humaine) ;
+\item Activation du plan de bascule par le responsable informatique de BOOM ;
+\item Démarrage des VM répliquées sur le cluster PRA via Veeam Failover Plan (automatisé, $\sim$15 minutes) ;
+\item Bascule des flux réseau via modification des annonces BGP et/ou bascule DNS ($\sim$30 minutes) ;
+\item Vérification des services et communication aux utilisateurs.
+\end{enumerate}
+
+Un test de bascule PRA sera réalisé une fois par an afin de valider la procédure et de former les équipes.
+
+\subsection{Gestion du split-brain}
+
+Pour éviter les situations de split-brain (les deux sites se croient actifs simultanément après une coupure de communication inter-DC), nous mettons en place :
+
+\begin{itemize}
+\item Un témoin (witness) hébergé sur un troisième site (cloud public) qui arbitre en cas de perte de communication entre les deux DC ;
+\item Des procédures opérationnelles claires définissant qui a l'autorité pour déclencher une bascule ;
+\item Un verrouillage applicatif empêchant les écritures simultanées sur les deux sites.
+\end{itemize}
+
+
+% ============================================================
+% CHAPITRE 4 : RÉSEAU
+% ============================================================
+\chapter{Architecture réseau}
+
+\section{Vue d'ensemble}
+
+L'architecture réseau proposée s'articule autour de trois niveaux :
+
+\begin{enumerate}
+\item \textbf{Le c\oe ur de réseau datacenter} : commutation et routage haute performance entre les serveurs, le stockage et la sortie WAN ;
+\item \textbf{Le réseau WAN} : interconnexion des 21 sites via un réseau MPLS opérateur complété par des liens Internet et une surcouche SD-WAN ;
+\item \textbf{Les réseaux LAN de site} : commutation d'accès, câblage structuré, WiFi et sécurité sur chaque site.
+\end{enumerate}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.85, transform shape,
+  cloudnode/.style={draw, thick, fill=thgris, cloud, cloud puffs=12, cloud puff arc=120, minimum width=5cm, minimum height=2.5cm, align=center, font=\small\bfseries},
+  dcbox/.style={draw, thick, fill=thbleu!10, rounded corners, minimum width=3.8cm, minimum height=1.8cm, align=center, font=\small},
+  sitebox/.style={draw, thick, fill=thorange!10, rounded corners, minimum width=3cm, minimum height=1.5cm, align=center, font=\footnotesize},
+  fwbox/.style={draw, thick, fill=red!10, rounded corners, minimum width=2cm, minimum height=0.8cm, align=center, font=\footnotesize},
+]
+  % Cloud MPLS
+  \node[cloudnode] (mpls) at (6,0) {MPLS\\Orange Business};
+
+  % Internet
+  \node[cloudnode, minimum width=3.5cm, minimum height=2cm] (inet) at (13,0) {Internet};
+
+  % DC Principal
+  \node[dcbox] (dc1) at (0,4) {\textbf{DC Toulouse}\\4 serveurs + SAN\\2 AS/400};
+  \node[fwbox] (fw1) at (0,1.5) {FortiGate\\600F (x2)};
+
+  % DC PRA
+  \node[dcbox] (dc2) at (13,4) {\textbf{DC Lyon}\\PRA};
+  \node[fwbox] (fw2) at (13,1.5) {FortiGate\\200F};
+
+  % Liens DC-MPLS
+  \draw[-Stealth, thick, thbleu] (fw1.south) -- (fw1.south |- mpls.west) -- (mpls.west);
+  \draw[-Stealth, thick, thbleu] (dc1.south) -- (fw1.north);
+  \draw[-Stealth, thick, thbleu] (fw2.south) -- (fw2.south |- mpls.east) -- (mpls.east);
+  \draw[-Stealth, thick, thbleu] (dc2.south) -- (fw2.north);
+
+  % Lien Internet
+  \draw[-Stealth, thick, thgrisfonce, dashed] (fw1.east) -- ++(1.5,0) |- (inet.west);
+  \draw[-Stealth, thick, thgrisfonce, dashed] (fw2.west) -- ++(-0.5,0) -- (inet.north);
+
+  % Sites
+  \node[sitebox] (sA1) at (0,-3.5) {Centre stockage\\Bordeaux};
+  \node[sitebox] (sA2) at (3,-3.5) {Centre stockage\\Nantes};
+  \node[sitebox] (sB1) at (6,-3.5) {Centre tri\\Lille};
+  \node[sitebox] (sB2) at (9,-3.5) {Centre tri\\Marseille};
+  \node[sitebox] (sC1) at (12,-3.5) {Plateau bureau\\Paris (Siège)};
+
+  \node[font=\footnotesize, thgrisfonce] at (6,-4.8) {\textit{... et 16 autres sites}};
+
+  % SD-WAN sur sites
+  \node[fwbox, minimum width=1.5cm] (fws1) at (0,-2) {FG-60F};
+  \node[fwbox, minimum width=1.5cm] (fws2) at (3,-2) {FG-60F};
+  \node[fwbox, minimum width=1.5cm] (fws3) at (6,-2) {FG-60F};
+  \node[fwbox, minimum width=1.5cm] (fws4) at (9,-2) {FG-60F};
+  \node[fwbox, minimum width=1.5cm] (fws5) at (12,-2) {FG-60F};
+
+  \draw[thick, thbleu] (mpls.south) -- ++(0,-0.5) -| (fws1.north);
+  \draw[thick, thbleu] (mpls.south) -- ++(0,-0.5) -| (fws2.north);
+  \draw[thick, thbleu] (mpls.south) -- ++(0,-0.5) -| (fws3.north);
+  \draw[thick, thbleu] (mpls.south) -- ++(0,-0.5) -| (fws4.north);
+  \draw[thick, thbleu] (mpls.south) -- ++(0,-0.5) -| (fws5.north);
+
+  \draw[thick, thorange] (fws1.south) -- (sA1.north);
+  \draw[thick, thorange] (fws2.south) -- (sA2.north);
+  \draw[thick, thorange] (fws3.south) -- (sB1.north);
+  \draw[thick, thorange] (fws4.south) -- (sB2.north);
+  \draw[thick, thorange] (fws5.south) -- (sC1.north);
+\end{tikzpicture}
+\caption{Architecture réseau globale}
+\label{fig:archi_reseau}
+\end{figure}
+
+\section{C\oe ur de réseau datacenter}
+
+\subsection{Topologie spine-leaf}
+
+Le réseau du datacenter est construit selon une topologie \textbf{spine-leaf} garantissant des performances prévisibles et une haute disponibilité :
+
+\begin{itemize}
+\item \textbf{2 switches spine} : Cisco Nexus 93180YC-FX3 (48 ports 25G + 6 ports 100G). Ils assurent le routage inter-VLAN et l'interconnexion WAN ;
+\item \textbf{2 switches leaf} : Cisco Nexus 9348GC-FXP (48 ports 1G + 4 ports 25G). Ils connectent les serveurs, le stockage et les AS/400.
+\end{itemize}
+
+Chaque serveur est raccordé aux deux switches leaf par ses 4 ports 25G (2 ports par leaf, en agrégation LACP). Le stockage PowerStore est connecté aux deux leaf par 4 liens 25G iSCSI (2 par contrôleur, un vers chaque leaf).
+
+Cette architecture garantit :
+\begin{itemize}
+\item Aucun point de défaillance unique (SPOF) : la perte d'un switch spine ou leaf n'entraîne pas de coupure ;
+\item Une bande passante nord-sud (serveurs $\leftrightarrow$ WAN) de 200~Gbps agrégés ;
+\item Une bande passante est-ouest (serveurs $\leftrightarrow$ stockage) de 100~Gbps agrégés ;
+\item Une latence intra-datacenter inférieure à 1~$\mu$s.
+\end{itemize}
+
+\subsection{Routage et VLAN datacenter}
+
+Le routage inter-VLAN est assuré par les switches spine (routage L3). Les VLAN suivants sont définis dans le datacenter :
+
+\begin{table}[H]
+\centering
+\begin{tabular}{clll}
+\toprule
+\textbf{VLAN ID} & \textbf{Nom} & \textbf{Réseau} & \textbf{Usage} \\
+\midrule
+10 & DC-MGMT & 10.0.10.0/24 & Administration des équipements DC \\
+20 & DC-PROD & 10.0.20.0/23 & VM de production \\
+30 & DC-STORAGE & 10.0.30.0/24 & Réseau iSCSI (stockage) \\
+40 & DC-VMOTION & 10.0.40.0/24 & vMotion VMware \\
+50 & DC-BACKUP & 10.0.50.0/24 & Flux de sauvegarde \\
+60 & DC-DMZ & 10.0.60.0/24 & Services exposés (EDI, RDS) \\
+\bottomrule
+\end{tabular}
+\caption{Plan VLAN du datacenter}
+\label{tab:vlan_dc}
+\end{table}
+
+\section{Réseau WAN et interconnexions inter-sites}
+
+\subsection{Architecture WAN double-attachement}
+
+Chaque site BOOM est raccordé au réseau via deux liens indépendants :
+
+\begin{enumerate}
+\item \textbf{Lien principal -- MPLS (Orange Business)} : réseau privé garanti avec classes de service (CoS) et SLA contractuel. Ce lien porte l'ensemble des flux métier (AS/400, ERP, téléphonie IP, vidéosurveillance inter-sites) ;
+\item \textbf{Lien secondaire -- Internet FTTH/FTTO} : lien Internet professionnel utilisé comme secours en cas de défaillance du lien MPLS, et pour les flux Internet directs (navigation web, SaaS).
+\end{enumerate}
+
+Le \textbf{SD-WAN Fortinet} orchestre l'utilisation de ces deux liens de manière intelligente : les flux critiques sont systématiquement routés sur le MPLS, tandis que les flux Internet (navigation, mises à jour) transitent directement par le lien Internet sans passer par le datacenter, réduisant ainsi la charge sur le lien MPLS.
+
+\subsection{Dimensionnement des liens}
+
+Le dimensionnement des liens tient compte des flux applicatifs, de la vidéosurveillance inter-sites (multicast), de la téléphonie IP et de la navigation Internet :
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{L{3.5cm}C{2cm}C{2cm}C{2.5cm}C{2.5cm}}
+\toprule
+\textbf{Type de site} & \textbf{Nb sites} & \textbf{MPLS} & \textbf{Internet} & \textbf{GTR MPLS} \\
+\midrule
+Centre de stockage & 6 & 200 Mbps & 300 Mbps & 4h (24/7) \\
+Centre de tri & 12 & 100 Mbps & 100 Mbps & 4h (HO) \\
+Plateau de bureau & 3 & 200 Mbps & 500 Mbps & 4h (24/7) \\
+Datacenter principal & 1 & 1 Gbps & 1 Gbps & 4h (24/7) \\
+Datacenter PRA & 1 & 500 Mbps & 500 Mbps & 4h (24/7) \\
+\bottomrule
+\end{tabularx}
+\caption{Dimensionnement des liaisons WAN}
+\label{tab:wan_liens}
+\end{table}
+
+\subsection{Classes de service MPLS}
+
+Le réseau MPLS est configuré avec les classes de service suivantes pour garantir la qualité des flux sensibles :
+
+\begin{table}[H]
+\centering
+\begin{tabular}{llcc}
+\toprule
+\textbf{Classe} & \textbf{Flux} & \textbf{Priorité} & \textbf{Bande passante} \\
+\midrule
+Temps réel & Téléphonie IP (VoIP) & Stricte & 15\% \\
+Critique & AS/400, ERP, vidéosurveillance & Haute & 40\% \\
+Standard & Messagerie, fichiers, Nextcloud & Normale & 35\% \\
+Best effort & Navigation, mises à jour & Basse & 10\% \\
+\bottomrule
+\end{tabular}
+\caption{Classes de service du réseau MPLS}
+\label{tab:cos}
+\end{table}
+
+\subsection{SD-WAN Fortinet}
+
+La surcouche SD-WAN est assurée par les firewalls \textbf{Fortinet FortiGate 60F} déployés sur chaque site. Le FortiManager centralisé (hébergé dans le DC principal) permet :
+
+\begin{itemize}
+\item La gestion centralisée des politiques de routage applicatif sur l'ensemble des sites ;
+\item La bascule automatique des flux critiques du MPLS vers le lien Internet (via tunnel IPsec) en cas de dégradation du lien principal (détection par SLA probes) ;
+\item Le monitoring en temps réel de la qualité de chaque lien (latence, jitter, perte de paquets) ;
+\item La remontée de l'ensemble des logs vers le FortiAnalyzer centralisé pour l'analyse de sécurité.
+\end{itemize}
+
+\section{Réseau LAN des sites}
+
+\subsection{Câblage structuré}
+
+Le câblage constitue la fondation de l'infrastructure réseau et représente un investissement de long terme (durée de vie de 15 à 20 ans). Nous proposons un câblage structuré conforme à la norme \textbf{ISO/CEI~11801} avec les caractéristiques suivantes :
+
+\begin{itemize}
+\item \textbf{Câble} : catégorie 6A F/FTP (blindé par feuille et tresse) -- ce choix garantit le support du 10~Gigabit Ethernet sur 100~m et offre une immunité supérieure aux perturbations électromagnétiques présentes dans les environnements industriels de BOOM ;
+\item \textbf{Connectique} : prises RJ45 catégorie 6A, panneaux de brassage 24 ports ;
+\item \textbf{Chemins de câbles} : chemins métalliques fermés dans les zones industrielles, goulotte dans les bureaux ;
+\item \textbf{Certification} : chaque lien sera testé et certifié avec un appareil de mesure Fluke DSX-8000 (rapport de test fourni dans le DOE).
+\end{itemize}
+
+\subsubsection{Dimensionnement du câblage par type de site}
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{L{4cm}C{1.5cm}C{1.5cm}C{1.5cm}R{2cm}}
+\toprule
+\textbf{Usage} & \textbf{Type A} & \textbf{Type B} & \textbf{Type C} & \textbf{Total} \\
+& \textbf{(x6)} & \textbf{(x12)} & \textbf{(x3)} & \\
+\midrule
+Postes de travail (data+voix) & 550 & 80 & 550 & 5\,910 \\
+Vidéosurveillance & 200 & 50 & 25 & 1\,875 \\
+Bornes WiFi & 25 & 12 & 15 & 339 \\
+Badgeuses & 10 & 6 & 4 & 144 \\
+Imprimantes / divers & 20 & 8 & 15 & 261 \\
+Réserve (15\%) & 121 & 23 & 91 & 1\,279 \\
+\midrule
+\textbf{Total par site} & \textbf{926} & \textbf{179} & \textbf{700} & -- \\
+\textbf{Total par type} & \textbf{5\,556} & \textbf{2\,148} & \textbf{2\,100} & \textbf{9\,804} \\
+\bottomrule
+\end{tabularx}
+\caption{Dimensionnement du câblage par site}
+\label{tab:cablage}
+\end{table}
+
+\subsubsection{Locaux techniques}
+
+La contrainte de 90 mètres maximum entre les prises terminales et le local technique impose un positionnement judicieux des locaux techniques, en particulier dans les grands entrepôts. Pour un centre de stockage dont l'entrepôt mesure 190$\times$320~m, nous prévoyons :
+
+\begin{itemize}
+\item \textbf{1 local technique principal (LT-P)} dans le plateau administratif : héberge le c\oe ur de réseau du site, les serveurs locaux éventuels, le raccordement WAN et la distribution vers le plateau ;
+\item \textbf{4 locaux techniques secondaires (LT-S)} répartis dans l'entrepôt : chacun couvre un rayon de $\sim$80~m et distribue les prises de sa zone (bornes WiFi, caméras, bureaux atelier) ;
+\item \textbf{1 local technique} dans le bâtiment camions.
+\end{itemize}
+
+Chaque local technique est équipé de :
+\begin{itemize}
+\item 1 à 3 baies de brassage 42U selon le nombre de prises desservies ;
+\item Climatisation autonome (redondée dans le LT-P) ;
+\item Onduleur pour assurer la continuité des équipements réseau, de la téléphonie IP et du WiFi en cas de coupure électrique courte (20~minutes d'autonomie) ;
+\item Contrôle d'accès par serrure sécurisée.
+\end{itemize}
+
+Les locaux techniques sont interconnectés en fibre optique monomode (OS2) avec au minimum 2 liens par local secondaire vers le local principal, en chemins physiques distincts pour la redondance.
+
+\subsection{Commutation LAN}
+
+\subsubsection{Architecture hiérarchique}
+
+Le réseau LAN de chaque site est structuré en deux niveaux :
+
+\begin{itemize}
+\item \textbf{Niveau distribution/c\oe ur} : paire de switches empilés (stack) \textbf{Cisco Catalyst 9300} dans le local technique principal. Ils assurent le routage inter-VLAN, l'agrégation des liens remontant des switches d'accès, et la connexion au WAN via le firewall ;
+\item \textbf{Niveau accès} : switches \textbf{Cisco Catalyst 9200} déployés dans chaque local technique, assurant la connexion des terminaux.
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.9, transform shape,
+  sw/.style={draw, thick, fill=thbleu!15, rounded corners, minimum width=2.8cm, minimum height=0.9cm, align=center, font=\footnotesize},
+  fw/.style={draw, thick, fill=red!10, rounded corners, minimum width=2.5cm, minimum height=0.9cm, align=center, font=\footnotesize},
+  lt/.style={draw, dashed, thick, thgrisfonce, rounded corners, inner sep=8pt},
+  term/.style={font=\tiny, align=center},
+]
+  % WAN
+  \node[fw] (wan) at (5,7) {FortiGate 60F\\(SD-WAN)};
+  \node[font=\footnotesize, above=0.3cm of wan] {Vers MPLS + Internet};
+
+  % Core / Distribution
+  \node[sw, fill=thbleu!25] (core1) at (3,5) {Cat 9300-48P\\(\#1 Stack)};
+  \node[sw, fill=thbleu!25] (core2) at (7,5) {Cat 9300-48P\\(\#2 Stack)};
+  \draw[thick, thbleu, Stealth-Stealth] (core1) -- node[above, font=\tiny] {Stack / LACP} (core2);
+  \draw[thick] (core1.north) -- ++(0,0.5) -| (wan.south west);
+  \draw[thick] (core2.north) -- ++(0,0.5) -| (wan.south east);
+
+  % LT Principal
+  \node[lt, fit=(core1)(core2)(wan), label={[font=\footnotesize\bfseries, thbleu]above left:LT Principal}] {};
+
+  % Access switches
+  \node[sw] (acc1) at (0,2.5) {Cat 9200-48P\\LT-S1};
+  \node[sw] (acc2) at (3.3,2.5) {Cat 9200-48P\\LT-S2};
+  \node[sw] (acc3) at (6.6,2.5) {Cat 9200-48P\\LT-S3};
+  \node[sw] (acc4) at (10,2.5) {Cat 9200-48P\\LT-S4};
+
+  \draw[thick, thbleu] (acc1.north) -- ++(0,0.5) -| (core1.south);
+  \draw[thick, thbleu] (acc2.north) -- (core1.south);
+  \draw[thick, thorange] (acc1.north east) -- ++(0,0.8) -| (core2.south);
+  \draw[thick, thorange] (acc2.north east) -- ++(0,0.6) -| (core2.south west);
+  \draw[thick, thbleu] (acc3.north) -- (core2.south);
+  \draw[thick, thbleu] (acc4.north) -- ++(0,0.5) -| (core2.south east);
+  \draw[thick, thorange] (acc3.north west) -- ++(0,0.6) -| (core1.south east);
+  \draw[thick, thorange] (acc4.north west) -- ++(0,0.8) -| (core1.south east);
+
+  % Terminaux
+  \node[term] at (0,1.2) {Caméras\\WiFi AP\\Bureaux entrepôt};
+  \node[term] at (3.3,1.2) {Caméras\\WiFi AP\\Bureaux entrepôt};
+  \node[term] at (6.6,1.2) {Postes admin\\Téléphones\\Imprimantes};
+  \node[term] at (10,1.2) {Postes admin\\Téléphones\\Badgeuses};
+\end{tikzpicture}
+\caption{Architecture LAN type d'un centre de stockage}
+\label{fig:lan_site}
+\end{figure}
+
+\subsubsection{Dimensionnement des switches}
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{L{3.5cm}L{3cm}C{1.5cm}C{1.5cm}C{1.5cm}}
+\toprule
+\textbf{Rôle} & \textbf{Modèle} & \textbf{Type A} & \textbf{Type B} & \textbf{Type C} \\
+& & \textbf{(x6)} & \textbf{(x12)} & \textbf{(x3)} \\
+\midrule
+Distribution/C\oe ur & Cisco Cat 9300-48P & 2 & 2 & 2 \\
+Accès (48 ports PoE+) & Cisco Cat 9200-48P & 12 & 2 & 8 \\
+Accès (24 ports PoE+) & Cisco Cat 9200-24P & 4 & 2 & 2 \\
+\midrule
+\textbf{Total par site} & & \textbf{18} & \textbf{6} & \textbf{12} \\
+\textbf{Total par type} & & \textbf{108} & \textbf{72} & \textbf{36} \\
+\bottomrule
+\end{tabularx}
+\caption{Répartition des switches par type de site}
+\label{tab:switches}
+\end{table}
+
+Le nombre total de switches s'élève à \textbf{216 unités} pour l'ensemble des 21 sites.
+
+\subsection{Plan d'adressage et politique de VLAN}
+
+Un plan de VLAN uniforme est déployé sur l'ensemble des sites pour simplifier l'administration et faciliter la mobilité des utilisateurs :
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{clll}
+\toprule
+\textbf{VLAN} & \textbf{Nom} & \textbf{Réseau} & \textbf{Usage} \\
+\midrule
+100 & MGMT & 10.\textit{site}.100.0/24 & Administration des équipements réseau \\
+110 & DATA-PC & 10.\textit{site}.110.0/23 & Postes de travail filaires \\
+120 & VOIP & 10.\textit{site}.120.0/24 & Téléphonie IP \\
+130 & WIFI-CORP & 10.\textit{site}.130.0/23 & WiFi entreprise \\
+140 & WIFI-GUEST & 10.\textit{site}.140.0/24 & WiFi invités (isolé) \\
+150 & WIFI-BYOD & 10.\textit{site}.150.0/24 & WiFi BYOD \\
+200 & VIDEOSURV-1 & 10.\textit{site}.200.0/24 & Vidéosurveillance -- flux caméras \\
+201 & VIDEOSURV-2 & 10.\textit{site}.201.0/24 & Vidéosurveillance -- management \\
+210 & BADGE & 10.\textit{site}.210.0/24 & Badgeuses (PoE) \\
+220 & IOT & 10.\textit{site}.220.0/24 & Sondes, clim, GTB \\
+230 & AS400-WIFI & 10.\textit{site}.230.0/24 & Terminaux WiFi AS/400 (chariots, PDA) \\
+250 & IMPRIMANTES & 10.\textit{site}.250.0/24 & Imprimantes réseau \\
+\bottomrule
+\end{tabular}
+\caption{Plan de VLAN uniforme sur les sites}
+\label{tab:vlan_sites}
+\end{table}
+
+La variable \textit{site} prend une valeur unique par site (ex. 1 à 21), garantissant l'unicité de l'adressage sur l'ensemble du réseau BOOM.
+
+\subsection{Sécurité réseau}
+
+\subsubsection{Firewalling}
+
+Le firewalling est assuré à deux niveaux :
+
+\begin{itemize}
+\item \textbf{Datacenter} : paire de \textbf{FortiGate 600F} en cluster actif-passif. Ces firewalls inspectent l'ensemble des flux nord-sud (sites $\leftrightarrow$ serveurs) et assurent la segmentation de la DMZ. Ils offrent un débit de filtrage de 36~Gbps et supportent l'inspection SSL/TLS ;
+\item \textbf{Sites} : \textbf{FortiGate 60F} sur chaque site, assurant le firewalling local, le SD-WAN, et la terminaison des tunnels VPN IPsec pour le lien Internet de secours.
+\end{itemize}
+
+L'ensemble est managé de manière centralisée via \textbf{FortiManager} (politiques de sécurité uniformes) et supervisé par \textbf{FortiAnalyzer} (centralisation des logs, rapports de sécurité, détection d'anomalies).
+
+\subsubsection{Contrôle d'accès réseau -- 802.1X}
+
+Nous déployons le protocole \textbf{IEEE 802.1X} sur l'ensemble des ports filaires et WiFi pour garantir que seuls les équipements autorisés puissent accéder au réseau :
+
+\begin{itemize}
+\item \textbf{Serveur RADIUS} : un serveur NPS (Network Policy Server) Windows déployé en VM dans le datacenter, intégré à l'Active Directory de BOOM ;
+\item \textbf{Authentification filaire} : les postes de travail rejoints au domaine s'authentifient par certificat machine (EAP-TLS). Les équipements non supportant 802.1X (imprimantes, caméras, badgeuses) sont authentifiés par leur adresse MAC (MAB -- MAC Authentication Bypass) et placés dans le VLAN approprié ;
+\item \textbf{Authentification WiFi} : le SSID entreprise utilise WPA3-Enterprise avec authentification EAP-TLS (certificat) ou PEAP-MSCHAPv2 (login/mot de passe AD) pour les terminaux ne supportant pas les certificats ;
+\item \textbf{Assignation dynamique de VLAN} : en fonction du profil de l'utilisateur ou de l'équipement, le serveur RADIUS indique au switch le VLAN à attribuer, permettant une segmentation fine sans configuration statique port par port.
+\end{itemize}
+
+\subsubsection{Protection contre les attaques locales}
+
+Les switches Cisco Catalyst 9200/9300 sont configurés avec les mécanismes de sécurité suivants :
+
+\begin{itemize}
+\item \textbf{DHCP Snooping} : protection contre les serveurs DHCP malveillants ;
+\item \textbf{Dynamic ARP Inspection (DAI)} : prévention de l'ARP spoofing ;
+\item \textbf{IP Source Guard} : empêche l'usurpation d'adresse IP ;
+\item \textbf{BPDU Guard} : protection du Spanning Tree contre les attaques par injection de BPDU ;
+\item \textbf{Port Security} : limitation du nombre d'adresses MAC autorisées par port ;
+\item \textbf{Storm Control} : limitation des tempêtes de broadcast.
+\end{itemize}
+
+\subsection{Gestion de la vidéosurveillance}
+
+La vidéosurveillance de BOOM représente un flux réseau significatif (jusqu'à 200 caméras par centre de stockage) avec des contraintes spécifiques que nous adressons comme suit :
+
+\begin{itemize}
+\item \textbf{2 VLAN dédiés par site} (VLAN 200 et 201) : séparation des flux vidéo (data) et de la gestion (management) des caméras, conformément aux exigences du cahier des charges ;
+\item \textbf{Support du multicast} : les flux vidéo utilisent le multicast pour permettre la visualisation simultanée depuis plusieurs postes de surveillance. Le protocole \textbf{IGMP Snooping} est activé sur tous les switches pour optimiser la distribution des flux multicast et éviter l'inondation des ports non concernés ;
+\item \textbf{Routage multicast inter-sites} : le cahier des charges exige que le PC de sécurité du siège puisse visualiser l'ensemble des caméras de tous les sites. Nous mettons en oeuvre le protocole \textbf{PIM Sparse Mode} sur les routeurs de c\oe ur et le \textbf{routage multicast via le réseau MPLS} (profil multicast MVPN). Les flux multicast sont acheminés à la demande uniquement vers les sites qui en font la requête (siège et PC de sécurité des centres de stockage), évitant ainsi de saturer les liens WAN ;
+\item \textbf{QoS} : les flux vidéosurveillance sont marqués en classe \og Critique \fg{} sur le réseau MPLS (DSCP AF31) pour garantir leur acheminement même en cas de congestion. La tolérance à la latence élevée mentionnée dans le cahier des charges nous permet d'utiliser une file d'attente à bande passante garantie plutôt que la file temps réel (réservée à la VoIP).
+\end{itemize}
+
+\subsection{Spanning Tree et redondance LAN}
+
+Le protocole \textbf{Rapid PVST+} (RPVST+) est déployé sur l'ensemble des sites pour permettre la redondance des liens tout en évitant les boucles réseau. Chaque VLAN dispose de son propre arbre couvrant, ce qui permet d'optimiser la répartition de charge entre les deux switches de distribution.
+
+Les liens montants (uplinks) entre switches d'accès et switches de distribution sont configurés en \textbf{LACP} (agrégation de liens) pour doubler la bande passante et assurer une bascule transparente en cas de défaillance d'un lien physique.
+
+
+% ============================================================
+% CHAPITRE 5 : WIFI
+% ============================================================
+\chapter{Solution WiFi}
+
+\section{Enjeux du WiFi pour BOOM}
+
+Le WiFi constitue un composant critique de l'infrastructure de BOOM pour plusieurs raisons :
+
+\begin{itemize}
+\item Les 120 PC embarqués sur chariots gerbeurs se connectent exclusivement en WiFi à l'AS/400 pour le pilotage des préparations de commandes -- toute perte de connexion WiFi interrompt l'activité de picking ;
+\item Les terminaux code-barres (environ 200 unités) utilisés au dispatch sont connectés en WiFi ;
+\item Les smartphones des équipes de sécurité, transport et moyens généraux utilisent le WiFi lorsqu'ils sont sur site ;
+\item Le BYOD et les accès invités nécessitent une couverture WiFi dans les zones de bureaux.
+\end{itemize}
+
+Les environnements d'entrepôt présentent des défis majeurs pour le WiFi : structures métalliques des rayonnages qui créent des réflexions et des zones d'ombre, températures extrêmes dans les zones froid négatif ($-25$°C) et froid positif ($+2$°C), et forte densité de terminaux mobiles se déplaçant rapidement (chariots à 10-15 km/h).
+
+\section{Solution proposée}
+
+\subsection{Bornes WiFi}
+
+Nous proposons des bornes \textbf{Cisco Catalyst 9130AXI} (WiFi 6, 802.11ax) pour l'ensemble des sites. Ces bornes offrent :
+
+\begin{itemize}
+\item Support WiFi 6 (802.11ax) avec OFDMA et MU-MIMO pour une meilleure gestion de la densité de terminaux ;
+\item Double radio (2,4~GHz + 5~GHz) avec radio dédiée à la sécurité et au scanning RF ;
+\item Support du fast roaming (802.11r/k/v) indispensable pour les chariots en mouvement ;
+\item Alimentation PoE+ (802.3at) -- compatible avec les switches Cisco Catalyst 9200/9300 ;
+\item Température de fonctionnement de $-20$°C à $+50$°C pour le modèle industriel (C9130AXI), adapté aux zones de froid positif.
+\end{itemize}
+
+Pour les zones de \textbf{froid négatif} ($-25$°C), nous utilisons le modèle \textbf{Cisco IW9167E} (WiFi 6E industriel outdoor) certifié pour fonctionner de $-40$°C à $+70$°C, avec un boîtier étanche IP67.
+
+\subsection{Contrôleur WiFi centralisé}
+
+L'ensemble des bornes est piloté par \textbf{2 contrôleurs Cisco Catalyst 9800-L} déployés en cluster actif-passif dans le datacenter principal. Cette administration centralisée permet :
+
+\begin{itemize}
+\item La configuration et le déploiement automatique des bornes (zero-touch provisioning) : une borne neuve branchée au réseau se configure automatiquement en téléchargeant sa configuration depuis le contrôleur ;
+\item La gestion dynamique de la puissance d'émission (RRM -- Radio Resource Management) : la puissance de chaque borne est ajustée automatiquement pour optimiser la couverture et limiter les interférences inter-bornes ;
+\item Le fast roaming centralisé : les clés de session sont partagées entre les bornes via le contrôleur, permettant un handover en moins de 30~ms (impératif pour les applications AS/400 temps réel sur les chariots) ;
+\item La détection des bornes pirates (Rogue AP detection) et la localisation des terminaux ;
+\item La supervision et le reporting centralisés via l'interface Catalyst Center (ex DNA Center).
+\end{itemize}
+
+\section{Dimensionnement et couverture}
+
+\subsection{Centres de stockage (Type A)}
+
+L'entrepôt d'un centre de stockage (190$\times$320~m) nécessite une couverture WiFi dense et fiable. Le calcul de couverture tient compte des contraintes suivantes :
+
+\begin{itemize}
+\item Rayon de couverture effectif par borne dans un entrepôt métallique : $\sim$20-25~m (atténuation due aux rayonnages) ;
+\item Chevauchement de 20\% entre les cellules pour le roaming ;
+\item Densité maximale de 15 terminaux par borne (chariots + PDA) ;
+\item Débit minimum garanti par terminal : 20~Mbps.
+\end{itemize}
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{L{4cm}C{2cm}C{2cm}L{4cm}}
+\toprule
+\textbf{Zone} & \textbf{Surface} & \textbf{Nb AP} & \textbf{Modèle} \\
+\midrule
+Zone de stockage & 16\,720~m\up{2} & 8 & C9130AXI \\
+Zone de préparation & 12\,000~m\up{2} & 6 & C9130AXI \\
+Zones froid positif & 8\,000~m\up{2} & 4 & C9130AXI \\
+Zones froid négatif & 4\,000~m\up{2} & 3 & IW9167E \\
+Plateau administratif & 2\,916~m\up{2} & 3 & C9130AXI \\
+Bâtiment camions & 2\,214~m\up{2} & 1 & C9130AXI \\
+\midrule
+\textbf{Total par site Type A} & & \textbf{25} & \\
+\bottomrule
+\end{tabularx}
+\caption{Dimensionnement WiFi -- Centre de stockage}
+\label{tab:wifi_typeA}
+\end{table}
+
+\subsection{Centres de tri (Type B)}
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{L{4cm}C{2cm}C{2cm}L{4cm}}
+\toprule
+\textbf{Zone} & \textbf{Surface} & \textbf{Nb AP} & \textbf{Modèle} \\
+\midrule
+Zone de tri / préparation & 10\,000~m\up{2} & 7 & C9130AXI \\
+Zones froid & 3\,000~m\up{2} & 2 & IW9167E \\
+Bureaux & 500~m\up{2} & 2 & C9130AXI \\
+Quai expédition/réception & 2\,000~m\up{2} & 1 & C9130AXI \\
+\midrule
+\textbf{Total par site Type B} & & \textbf{12} & \\
+\bottomrule
+\end{tabularx}
+\caption{Dimensionnement WiFi -- Centre de tri}
+\label{tab:wifi_typeB}
+\end{table}
+
+\subsection{Plateaux de bureau (Type C)}
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{L{4cm}C{2cm}C{2cm}L{4cm}}
+\toprule
+\textbf{Zone} & \textbf{Surface} & \textbf{Nb AP} & \textbf{Modèle} \\
+\midrule
+Open spaces & 2\,000~m\up{2} & 8 & C9130AXI \\
+Salles de réunion & 500~m\up{2} & 4 & C9130AXI \\
+Espaces communs & 500~m\up{2} & 3 & C9130AXI \\
+\midrule
+\textbf{Total par site Type C} & & \textbf{15} & \\
+\bottomrule
+\end{tabularx}
+\caption{Dimensionnement WiFi -- Plateau de bureau}
+\label{tab:wifi_typeC}
+\end{table}
+
+\subsection{Synthèse WiFi globale}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{lccr}
+\toprule
+\textbf{Type de site} & \textbf{Nb sites} & \textbf{AP / site} & \textbf{Total AP} \\
+\midrule
+Centre de stockage (A) & 6 & 25 & 150 \\
+Centre de tri (B) & 12 & 12 & 144 \\
+Plateau de bureau (C) & 3 & 15 & 45 \\
+\midrule
+\textbf{Total} & \textbf{21} & & \textbf{339} \\
+\bottomrule
+\end{tabular}
+\caption{Synthèse du déploiement WiFi}
+\label{tab:wifi_total}
+\end{table}
+
+\section{Sécurité WiFi}
+
+Trois SSID sont diffusés sur l'ensemble des sites :
+
+\begin{description}
+\item[BOOM-CORP] SSID d'entreprise, sécurisé en WPA3-Enterprise (802.1X). Authentification par certificat (EAP-TLS) ou identifiant AD (PEAP). Attribution dynamique du VLAN en fonction du profil (VLAN 130 ou VLAN 230 pour les terminaux AS/400).
+\item[BOOM-GUEST] SSID invités, isolé dans le VLAN 140 avec portail captif. Accès Internet uniquement, débit limité à 10~Mbps, durée de session limitée à 8~heures. Aucun accès au réseau interne.
+\item[BOOM-BYOD] SSID pour les équipements personnels des employés, VLAN 150, accès Internet et messagerie uniquement. Authentification par identifiant AD via portail captif ou WPA2-Enterprise.
+\end{description}
+
+
+% ============================================================
+% CHAPITRE 6 : TÉLÉPHONIE
+% ============================================================
+\chapter{Solution de téléphonie}
+
+\section{Architecture téléphonique}
+
+Nous proposons une solution de téléphonie sur IP centralisée basée sur \textbf{3CX Enterprise Edition}, hébergée dans le datacenter principal sur une machine virtuelle dédiée. Ce choix se justifie par :
+
+\begin{itemize}
+\item Le coût de licence compétitif par rapport aux solutions propriétaires (Cisco, Alcatel) ;
+\item La richesse fonctionnelle native : standard automatique, files d'attente, enregistrement d'appels, intégration CRM, visioconférence intégrée ;
+\item La facilité d'administration via une interface web intuitive ;
+\item La compatibilité avec un large éventail de postes téléphoniques SIP ;
+\item Le support natif du protocole SIP pour le trunking opérateur ;
+\item La haute disponibilité via un second serveur 3CX en standby dans le DC PRA.
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.85, transform shape,
+  box/.style={draw, thick, fill=#1, rounded corners, minimum width=3cm, minimum height=1.2cm, align=center, font=\small},
+  box/.default={thbleu!10},
+  lien/.style={-Stealth, thick},
+]
+  % Serveur 3CX
+  \node[box=thbleu!20] (pbx) at (5,6) {\textbf{3CX Enterprise}\\VM -- Datacenter};
+  \node[box=red!10] (sip) at (11,6) {\textbf{Trunk SIP}\\OVH Telecom\\100 canaux};
+  \draw[lien] (pbx) -- node[above, font=\footnotesize] {SIP/TLS} (sip);
+  \node[font=\footnotesize, right=0.3cm of sip] {$\leftarrow$ RTC};
+
+  % WAN
+  \node[draw, thick, fill=thgris, rounded corners, minimum width=3cm, minimum height=1cm, font=\small] (wan) at (5,4) {Réseau WAN};
+  \draw[lien] (pbx) -- (wan);
+
+  % Sites
+  \node[box=thorange!15] (s1) at (0,1.5) {\textbf{Site Type A}\\Téléphones IP\\Bases DECT};
+  \node[box=thorange!15] (s2) at (5,1.5) {\textbf{Site Type B}\\Téléphones IP};
+  \node[box=thorange!15] (s3) at (10,1.5) {\textbf{Site Type C}\\Téléphones IP\\Casques};
+
+  \draw[lien] (wan) -- (s1);
+  \draw[lien] (wan) -- (s2);
+  \draw[lien] (wan) -- (s3);
+
+  % Détail postes
+  \node[font=\tiny, align=left, below=0.2cm of s1] {- Yealink T46U (resp.)\\- Yealink T33G (standard)\\- DECT W80B + W56H};
+  \node[font=\tiny, align=left, below=0.2cm of s2] {- Yealink T33G\\- Poste de garde};
+  \node[font=\tiny, align=left, below=0.2cm of s3] {- Yealink T46U (ADV, support)\\- Casques Jabra Evolve\\- Softphone 3CX mobile};
+\end{tikzpicture}
+\caption{Architecture de la solution téléphonique}
+\label{fig:telephonie}
+\end{figure}
+
+\section{Trunk SIP}
+
+La connexion au réseau téléphonique commuté (RTC/RNIS) est assurée par un \textbf{trunk SIP} fourni par \textbf{OVH Telecom}, offrant :
+
+\begin{itemize}
+\item 100 canaux simultanés (appels entrants + sortants) ;
+\item Portabilité des numéros existants de BOOM ;
+\item Numéros géographiques sur les différentes régions pour les plateaux de support client ;
+\item Tarification avantageuse : forfait illimité vers fixes et mobiles France ;
+\item Redondance : le trunk est livré à la fois sur le DC principal et le DC PRA, avec bascule automatique.
+\end{itemize}
+
+\section{Postes téléphoniques et terminaux}
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{L{3cm}L{3.5cm}C{1.5cm}L{4.5cm}}
+\toprule
+\textbf{Modèle} & \textbf{Usage} & \textbf{Quantité} & \textbf{Caractéristiques} \\
+\midrule
+Yealink T46U & Postes avancés (ADV, support client, resp. service, direction) & 320 & Écran couleur 4,3", 16 comptes SIP, PoE, Bluetooth, port USB pour casque \\
+\addlinespace
+Yealink T33G & Postes standards (admin, sécurité, bureaux) & 480 & Écran couleur 2,4", 4 comptes SIP, PoE, HD Voice \\
+\addlinespace
+Yealink W80B + W56H & Bases DECT + combinés (entrepôts, moyens généraux) & 50 bases, 140 combinés & Base multi-cellule, 8 appels simultanés, portée 300m ext., combiné durci IP65 \\
+\addlinespace
+Jabra Evolve2 55 & Casques USB/BT (support client, ADV) & 200 & Réduction de bruit active, certifié 3CX, USB-C + Bluetooth \\
+\addlinespace
+3CX App mobile & Softphone smartphone (commerciaux, chauffeurs) & 580 lic. & Application iOS/Android, appels via WiFi/4G \\
+\bottomrule
+\end{tabularx}
+\caption{Catalogue des postes et terminaux téléphoniques}
+\label{tab:postes_tel}
+\end{table}
+
+\section{Fonctionnalités avancées}
+
+La solution 3CX intègre nativement les fonctionnalités suivantes, exploitées par BOOM :
+
+\begin{itemize}
+\item \textbf{Standard automatique (SVI)} : accueil vocal avec menus de sélection pour orienter les appels entrants vers le bon service (support client, transport, commercial, administration) ;
+\item \textbf{Files d'attente avec distribution intelligente} : les appels du support client sont distribués automatiquement aux téléconseillers disponibles, avec gestion des priorités et affichage du temps d'attente ;
+\item \textbf{Enregistrement des appels} : conformément aux obligations légales, les appels du support client et des prises de commandes peuvent être enregistrés (avec annonce préalable) ;
+\item \textbf{Intégration annuaire} : synchronisation avec l'Active Directory de BOOM pour l'annuaire interne et le click-to-call depuis Outlook ;
+\item \textbf{Visioconférence intégrée} : solution de visioconférence web native (sans client à installer) pour les réunions internes et externes, réduisant les déplacements inter-sites ;
+\item \textbf{Survivabilité locale} : en cas de coupure du lien WAN, les appels intra-site continuent de fonctionner via le réseau local. Les appels vers l'extérieur sont reroutés via le lien Internet de secours.
+\end{itemize}
+
+
+% ============================================================
+% CHAPITRE 7 : POSTES DE TRAVAIL ET TERMINAUX
+% ============================================================
+\chapter{Postes de travail et terminaux}
+
+\section{Stratégie}
+
+Notre approche en matière de postes de travail repose sur la standardisation du parc autour d'un nombre réduit de configurations types. Cette standardisation vise à simplifier la gestion du parc (masterisation, déploiement, support), à optimiser les coûts d'achat (effet volume) et à faciliter la gestion des pièces de rechange.
+
+Nous avons défini \textbf{7 profils types} couvrant l'ensemble des besoins identifiés dans le cahier des charges.
+
+\section{Catalogue des configurations}
+
+\subsection{Postes fixes de bureau}
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{L{2.5cm}L{10.5cm}}
+\toprule
+\multicolumn{2}{c}{\textbf{Profil 1 -- Poste fixe standard}} \\
+\midrule
+Modèle & Dell OptiPlex 7010 SFF \\
+Processeur & Intel Core i5-13500 (14 c\oe urs, 4,8~GHz boost) \\
+Mémoire & 16~Go DDR5 \\
+Stockage & SSD NVMe 512~Go \\
+OS & Windows 11 Professionnel \\
+Connectique & 2x DisplayPort, 1x HDMI, 4x USB-A, 2x USB-C, RJ45 GbE \\
+Garantie & 3 ans ProSupport J+1 sur site \\
+\midrule
+Quantité & \textbf{650 unités} \\
+Usage & Support client, ADV, transport admin, administratif (80\%), sécurité postes de garde \\
+\bottomrule
+\end{tabularx}
+\caption{Configuration -- Poste fixe standard}
+\end{table}
+
+\subsection{Écrans}
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{L{2.5cm}L{10.5cm}}
+\toprule
+\multicolumn{2}{c}{\textbf{Écran 27 pouces}} \\
+\midrule
+Modèle & Dell E2723H \\
+Dalle & IPS 27", résolution 1920x1080 (Full HD) \\
+Connectique & DisplayPort + HDMI \\
+Ergonomie & Pied réglable en hauteur, pivot, inclinaison \\
+Garantie & 3 ans échange standard \\
+\midrule
+Quantité & \textbf{1\,350 unités} \\
+Usage & Double écran pour support client (200), ADV (200), transport admin (200), administratif (700), responsables (50) \\
+\bottomrule
+\end{tabularx}
+\caption{Configuration -- Écran 27 pouces}
+\end{table}
+
+\subsection{Ordinateurs portables}
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{L{2.5cm}L{10.5cm}}
+\toprule
+\multicolumn{2}{c}{\textbf{Profil 2 -- Portable standard}} \\
+\midrule
+Modèle & Dell Latitude 5550 \\
+Processeur & Intel Core i5-1345U (10 c\oe urs) \\
+Mémoire & 16~Go DDR5 \\
+Stockage & SSD NVMe 512~Go \\
+Écran & 15,6" Full HD IPS \\
+Réseau & WiFi 6E + RJ45 GbE \\
+Garantie & 3 ans ProSupport J+1 \\
+\midrule
+Quantité & \textbf{180 unités} \\
+Usage & Commerciaux (80), administratif portable (100) \\
+\bottomrule
+\end{tabularx}
+\caption{Configuration -- Portable standard}
+\end{table}
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{L{2.5cm}L{10.5cm}}
+\toprule
+\multicolumn{2}{c}{\textbf{Profil 3 -- Portable durci}} \\
+\midrule
+Modèle & Dell Latitude 5430 Rugged \\
+Processeur & Intel Core i5-1245U \\
+Mémoire & 16~Go DDR4 \\
+Stockage & SSD 512~Go \\
+Certification & MIL-STD-810H, IP53 (résistance chocs, poussière, eau) \\
+Écran & 14" Full HD lisible en plein soleil \\
+Autonomie & $\sim$12h (batterie échangeable à chaud) \\
+Garantie & 3 ans ProSupport J+1 \\
+\midrule
+Quantité & \textbf{145 unités} \\
+Usage & Moyens généraux (140), directeur sécurité et adjoints (5) \\
+\bottomrule
+\end{tabularx}
+\caption{Configuration -- Portable durci}
+\end{table}
+
+\subsection{Terminaux spécifiques métier}
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{L{2.5cm}L{10.5cm}}
+\toprule
+\multicolumn{2}{c}{\textbf{Profil 4 -- PC embarqué chariot gerbeur}} \\
+\midrule
+Modèle & Zebra VC83 \\
+Processeur & Intel Core i5 (fanless) \\
+Écran & 8" tactile lisible sous éclairage artificiel \\
+Réseau & WiFi 6 (802.11ax) avec support roaming 802.11r/k/v \\
+Certification & IP66, MIL-STD-810H, $-30$°C à $+50$°C \\
+Montage & Bras articulé fixé sur le chariot \\
+Garantie & 3 ans Zebra OneCare \\
+\midrule
+Quantité & \textbf{120 unités} \\
+Usage & Chariots gerbeurs -- picking AS/400 \\
+\bottomrule
+\end{tabularx}
+\caption{Configuration -- PC embarqué chariot}
+\end{table}
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{L{2.5cm}L{10.5cm}}
+\toprule
+\multicolumn{2}{c}{\textbf{Profil 5 -- Terminal code-barres}} \\
+\midrule
+Modèle & Zebra TC52x \\
+Écran & 5" tactile HD \\
+Lecteur & 1D/2D imager longue portée \\
+Réseau & WiFi 6, Bluetooth 5.1 \\
+Certification & IP67, MIL-STD-810H, $-20$°C à $+50$°C \\
+Autonomie & $\sim$14h (batterie échangeable) \\
+Garantie & 3 ans Zebra OneCare \\
+\midrule
+Quantité & \textbf{200 unités} \\
+Usage & Dispatch, réception/expédition -- scan et suivi AS/400 \\
+\bottomrule
+\end{tabularx}
+\caption{Configuration -- Terminal code-barres}
+\end{table}
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{L{2.5cm}L{10.5cm}}
+\toprule
+\multicolumn{2}{c}{\textbf{Profil 6 -- Smartphone durci}} \\
+\midrule
+Modèle & Samsung Galaxy XCover 6 Pro \\
+Écran & 6,6" Full HD+ \\
+Processeur & Snapdragon 778G \\
+Réseau & 4G/5G, WiFi 6, NFC \\
+Certification & IP68, MIL-STD-810H \\
+Autonomie & $\sim$16h (batterie 4050~mAh amovible) \\
+MDM & Compatible Samsung Knox pour gestion centralisée \\
+Garantie & 2 ans constructeur + extension 1 an \\
+\midrule
+Quantité & \textbf{780 unités} \\
+Usage & Chauffeurs (500), sécurité (200), commerciaux (80) \\
+\bottomrule
+\end{tabularx}
+\caption{Configuration -- Smartphone durci}
+\end{table}
+
+\subsection{Synthèse du parc}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{lcr}
+\toprule
+\textbf{Type d'équipement} & \textbf{Quantité} & \textbf{Montant HT} \\
+\midrule
+Postes fixes Dell OptiPlex 7010 & 650 & 468\,000~\euro{} \\
+Écrans Dell E2723H 27" & 1\,350 & 364\,500~\euro{} \\
+Portables Dell Latitude 5550 & 180 & 189\,000~\euro{} \\
+Portables durcis Dell Latitude 5430R & 145 & 304\,500~\euro{} \\
+PC chariot Zebra VC83 & 120 & 324\,000~\euro{} \\
+Terminal code-barres Zebra TC52x & 200 & 110\,000~\euro{} \\
+Smartphone Samsung XCover 6 Pro & 780 & 265\,200~\euro{} \\
+\midrule
+\textbf{Total postes et terminaux} & \textbf{3\,425} & \textbf{2\,025\,200~\euro{}} \\
+\bottomrule
+\end{tabular}
+\caption{Synthèse du parc de postes de travail et terminaux}
+\label{tab:synthese_postes}
+\end{table}
+
+
+% ============================================================
+% CHAPITRE 8 : ADMINISTRATION ET SUPERVISION
+% ============================================================
+\chapter{Administration et supervision}
+
+\section{Outils d'administration}
+
+L'administration de l'infrastructure est structurée autour d'outils centralisés permettant aux 2 administrateurs système et aux 10 techniciens de BOOM de gérer efficacement l'ensemble du parc :
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{L{3cm}L{3cm}L{7cm}}
+\toprule
+\textbf{Domaine} & \textbf{Outil} & \textbf{Rôle} \\
+\midrule
+Virtualisation & VMware vCenter & Administration des hyperviseurs, VM, vMotion, DRS \\
+Réseau LAN & Cisco Catalyst Center & Administration centralisée des switches et AP WiFi, mise à jour firmware, déploiement de configurations \\
+Sécurité & FortiManager & Gestion centralisée des firewalls, politiques SD-WAN \\
+Sécurité (logs) & FortiAnalyzer & Centralisation des logs, corrélation d'événements, rapports \\
+Sauvegarde & Veeam B\&R Console & Gestion des jobs de sauvegarde, supervision, restauration \\
+Téléphonie & Console web 3CX & Administration du PBX, monitoring des appels, configuration \\
+Postes de travail & Microsoft SCCM / Intune & Déploiement d'images, mises à jour, inventaire logiciel \\
+Smartphones & Samsung Knox & MDM : déploiement d'applications, politiques de sécurité \\
+Annuaire & Active Directory & Gestion des comptes utilisateurs, GPO, authentification \\
+DHCP / DNS & Windows Server & Services réseau centralisés, DHCP par site (IP Helper) \\
+\bottomrule
+\end{tabularx}
+\caption{Outils d'administration de l'infrastructure}
+\label{tab:outils_admin}
+\end{table}
+
+\section{Supervision}
+
+La supervision est assurée par \textbf{Zabbix} (solution open-source éprouvée), déployé sur une VM dédiée dans le datacenter principal. Zabbix collecte en temps réel les métriques de l'ensemble des composants de l'infrastructure :
+
+\begin{itemize}
+\item \textbf{Réseau} : état des interfaces, utilisation bande passante, erreurs CRC, état PoE, latence WAN, état des tunnels VPN (via SNMP v3) ;
+\item \textbf{Serveurs} : CPU, RAM, disques, température, état des ventilateurs, alertes hardware (via IPMI/iDRAC) ;
+\item \textbf{Stockage} : IOPS, latence, capacité, état des disques, alertes contrôleur ;
+\item \textbf{Services} : état des VM, temps de réponse applicatif, disponibilité des services critiques (AS/400, Exchange, 3CX) ;
+\item \textbf{WAN} : qualité des liens MPLS et Internet (latence, jitter, perte de paquets) via probes ICMP et SLA probes Fortinet.
+\end{itemize}
+
+Des \textbf{tableaux de bord} personnalisés sont créés pour les différents profils d'utilisateurs :
+\begin{itemize}
+\item Vue \textbf{NOC} (Network Operations Center) : état global du réseau et des services ;
+\item Vue \textbf{DSI} : indicateurs de performance et de disponibilité synthétiques ;
+\item Vue \textbf{Technique} : détail des alertes et métriques par composant.
+\end{itemize}
+
+Les alertes sont remontées selon trois niveaux de criticité :
+\begin{enumerate}
+\item \textbf{Information} : notification par email (ex. : disque à 80\% d'utilisation) ;
+\item \textbf{Avertissement} : notification email + SMS au technicien d'astreinte (ex. : perte d'un lien WAN redondant) ;
+\item \textbf{Critique} : notification email + SMS + appel téléphonique automatique (ex. : perte du dernier lien WAN sur un site, indisponibilité d'un service critique).
+\end{enumerate}
+
+\section{Gestion des mises à jour}
+
+La politique de mises à jour est structurée pour concilier sécurité et stabilité :
+
+\begin{itemize}
+\item \textbf{Systèmes d'exploitation (Windows)} : déploiement mensuel des correctifs de sécurité Microsoft via WSUS/SCCM, avec un délai de validation de 2 semaines après la sortie (test sur un groupe pilote) ;
+\item \textbf{Firmwares réseau (Cisco, Fortinet)} : mises à jour trimestrielles programmées en fenêtre de maintenance (dimanche 2h-6h), avec rollback préparé en cas de problème ;
+\item \textbf{Hyperviseurs (ESXi)} : mises à jour semestrielles avec vSphere Lifecycle Manager, en mode rolling (un serveur à la fois pour maintenir la disponibilité) ;
+\item \textbf{Applications critiques (AS/400, ERP)} : mises à jour coordonnées avec les éditeurs et l'équipe de développement de BOOM, testées en environnement de pré-production.
+\end{itemize}
+
+
+% ============================================================
+% CHAPITRE 9 : PLANNING DE DÉPLOIEMENT
+% ============================================================
+\chapter{Planning de déploiement}
+
+\section{Phasage du projet}
+
+Le déploiement est planifié sur une durée de \textbf{12 mois}, structuré en phases progressives permettant de valider la solution avant chaque montée en charge :
+
+\subsection{Phase 1 -- Étude et conception détaillée (Mois 1-2)}
+
+\begin{itemize}
+\item Audit détaillé de l'existant sur l'ensemble des 21 sites ;
+\item Recueil des contraintes spécifiques par site (accès, fenêtres d'intervention, cohabitation avec l'exploitation) ;
+\item Production des documents d'architecture détaillés (HLD + LLD) ;
+\item Validation des plans de câblage avec les responsables de sites ;
+\item Commande des équipements (délais de livraison prévisionnels : 4 à 8 semaines).
+\end{itemize}
+
+\subsection{Phase 2 -- Déploiement du datacenter (Mois 3-4)}
+
+\begin{itemize}
+\item Installation des baies et du câblage datacenter (Equinix Toulouse) ;
+\item Mise en rack des serveurs, du stockage et des équipements réseau ;
+\item Configuration de la virtualisation VMware et des VM d'infrastructure (AD, DNS, DHCP, NPS, Zabbix) ;
+\item Migration des AS/400 depuis le site actuel vers le datacenter (opération planifiée sur un week-end avec basculement DNS) ;
+\item Mise en place de la sauvegarde Veeam et premiers tests de restauration ;
+\item Déploiement du DC PRA (Lyon) et configuration de la réplication.
+\end{itemize}
+
+\subsection{Phase 3 -- Site pilote (Mois 4-5)}
+
+\begin{itemize}
+\item Déploiement complet sur un centre de stockage représentatif (câblage, réseau, WiFi, téléphonie, postes) ;
+\item Tests approfondis : couverture WiFi, performance AS/400 via WiFi, qualité téléphonie, vidéosurveillance multicast, roaming chariots ;
+\item Ajustements de configuration basés sur le retour terrain ;
+\item Validation formelle par BOOM (PV de recette du site pilote).
+\end{itemize}
+
+\subsection{Phase 4 -- Déploiement des liaisons WAN (Mois 4-6)}
+
+\begin{itemize}
+\item Commande et livraison des liens MPLS et Internet par Orange Business (délai opérateur : 6 à 10 semaines) ;
+\item Configuration des FortiGate 60F en pré-staging dans nos locaux ;
+\item Activation progressive des liens et bascule des sites.
+\end{itemize}
+
+\subsection{Phase 5 -- Déploiement par vagues (Mois 5-10)}
+
+Le déploiement des sites se fait par vagues de 3 à 4 sites, avec un rythme d'environ un site par semaine une fois le processus rodé :
+
+\begin{itemize}
+\item \textbf{Vague 1} (Mois 5-6) : 3 centres de tri (sites les moins complexes) ;
+\item \textbf{Vague 2} (Mois 6-7) : 3 centres de tri + 1 plateau de bureau ;
+\item \textbf{Vague 3} (Mois 7-8) : 3 centres de tri + 2 centres de stockage ;
+\item \textbf{Vague 4} (Mois 8-9) : 3 centres de tri + 2 centres de stockage + 1 plateau ;
+\item \textbf{Vague 5} (Mois 9-10) : 2 centres de stockage + 1 plateau (siège, déployé en dernier pour bénéficier de tout le retour d'expérience).
+\end{itemize}
+
+\subsection{Phase 6 -- Recette finale et transfert (Mois 11-12)}
+
+\begin{itemize}
+\item Recette globale de l'infrastructure (tests de charge, tests de bascule PRA, tests WAN) ;
+\item Formation des équipes IT de BOOM (administrateurs et techniciens) ;
+\item Remise du Dossier des Ouvrages Exécutés (DOE) ;
+\item Transfert en exploitation et démarrage de la période de garantie (hypercare de 3 mois).
+\end{itemize}
+
+\section{Diagramme de Gantt}
+
+\begin{figure}[H]
+\centering
+\begin{ganttchart}[
+  hgrid,
+  vgrid={*{11}{draw=thgris}},
+  x unit=1cm,
+  y unit title=0.6cm,
+  y unit chart=0.55cm,
+  title height=1,
+  bar height=0.6,
+  bar/.append style={fill=thbleu!60},
+  bar incomplete/.append style={fill=thorange!40},
+  milestone/.append style={fill=thorange},
+  group/.append style={draw=thbleu, fill=thbleu!20},
+  title label font=\footnotesize\bfseries,
+  bar label font=\footnotesize,
+  group label font=\footnotesize\bfseries,
+  milestone label font=\footnotesize\itshape,
+]{1}{12}
+  \gantttitle{Mois}{12} \\
+  \gantttitlelist{1,...,12}{1} \\
+
+  \ganttgroup{Conception}{1}{2} \\
+  \ganttbar{Étude détaillée}{1}{2} \\
+  \ganttbar{Commande équipements}{2}{3} \\
+
+  \ganttgroup{Datacenter}{3}{4} \\
+  \ganttbar{Installation DC principal}{3}{4} \\
+  \ganttbar{Migration AS/400}{4}{4} \\
+  \ganttbar{Installation DC PRA}{4}{5} \\
+
+  \ganttgroup{Pilote}{4}{5} \\
+  \ganttbar{Déploiement site pilote}{4}{5} \\
+  \ganttmilestone{Recette pilote}{5} \\
+
+  \ganttgroup{WAN}{4}{6} \\
+  \ganttbar{Commande liens opérateur}{4}{4} \\
+  \ganttbar{Activation WAN}{5}{6} \\
+
+  \ganttgroup{Déploiement sites}{5}{10} \\
+  \ganttbar{Vague 1 (3 sites)}{5}{6} \\
+  \ganttbar{Vague 2 (4 sites)}{6}{7} \\
+  \ganttbar{Vague 3 (5 sites)}{7}{8} \\
+  \ganttbar{Vague 4 (6 sites)}{8}{9} \\
+  \ganttbar{Vague 5 (3 sites + siège)}{9}{10} \\
+
+  \ganttgroup{Finalisation}{11}{12} \\
+  \ganttbar{Recette globale}{11}{11} \\
+  \ganttbar{Formation et transfert}{11}{12} \\
+  \ganttmilestone{Mise en exploitation}{12}
+\end{ganttchart}
+\caption{Diagramme de Gantt du projet}
+\label{fig:gantt}
+\end{figure}
+
+\section{Contraintes d'exploitation et mitigations}
+
+Le déploiement d'une infrastructure réseau sur des sites en production continue (24/7 pour certains) impose des précautions particulières :
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{L{3.5cm}L{4cm}L{5cm}}
+\toprule
+\textbf{Contrainte} & \textbf{Impact} & \textbf{Mitigation} \\
+\midrule
+Sites SEVESO : interventions encadrées & Accès restreint, habilitations nécessaires & Formation SEVESO de nos techniciens en amont. Coordination avec le service sécurité BOOM \\
+\addlinespace
+Activité 24/7 du support client & Pas de coupure possible en semaine & Bascule sur l'ancien réseau en cas de problème. Interventions de nuit et week-end sur les plateaux \\
+\addlinespace
+Zones froid négatif : durée d'intervention limitée & Techniciens limités à 30~min en continu & Pré-assemblage en local technique tempéré, interventions courtes planifiées \\
+\addlinespace
+Migration AS/400 & Arrêt des opérations logistiques & Migration sur un week-end prolongé (samedi-dimanche), basculement DNS pré-configuré, plan de rollback \\
+\addlinespace
+Câblage en entrepôt en exploitation & Risque de gêne des chariots & Travaux de câblage de nuit ou pendant les jours de plus faible activité, coordination avec les chefs d'équipe \\
+\bottomrule
+\end{tabularx}
+\caption{Contraintes d'exploitation et mitigations}
+\label{tab:contraintes}
+\end{table}
+
+
+% ============================================================
+% CHAPITRE 10 : PROPOSITION FINANCIÈRE
+% ============================================================
+\chapter{Proposition financière}
+
+La présente proposition financière détaille l'ensemble des coûts d'investissement (CAPEX) et de fonctionnement récurrent (OPEX) sur une période de 3 ans. Tous les prix sont indiqués hors taxes.
+
+\section{LOT 1 -- Infrastructure c\oe ur (Datacenter)}
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{L{5cm}C{1.2cm}R{2cm}R{2.5cm}}
+\toprule
+\textbf{Désignation} & \textbf{Qté} & \textbf{PU HT} & \textbf{Total HT} \\
+\midrule
+\multicolumn{4}{l}{\textbf{Hébergement datacenter (3 ans)}} \\
+\quad Baie 42U Equinix TH2 (5kW) -- 36 mois & 3 & 28\,800~\euro{} & 86\,400~\euro{} \\
+\quad Baie 42U SFR Netcenter Lyon -- 36 mois & 1 & 26\,400~\euro{} & 26\,400~\euro{} \\
+\addlinespace
+\multicolumn{4}{l}{\textbf{Serveurs}} \\
+\quad Dell PowerEdge R760 (production) & 4 & 28\,500~\euro{} & 114\,000~\euro{} \\
+\quad Dell PowerEdge R760 (PRA) & 2 & 28\,500~\euro{} & 57\,000~\euro{} \\
+\addlinespace
+\multicolumn{4}{l}{\textbf{Virtualisation (licences)}} \\
+\quad VMware vSphere Standard (par CPU) & 12 & 1\,350~\euro{} & 16\,200~\euro{} \\
+\quad VMware vCenter Standard & 1 & 8\,200~\euro{} & 8\,200~\euro{} \\
+\addlinespace
+\multicolumn{4}{l}{\textbf{Stockage}} \\
+\quad Dell PowerStore 1200T (production) & 1 & 115\,000~\euro{} & 115\,000~\euro{} \\
+\quad Étagère expansion NL-SAS 200~To & 1 & 42\,000~\euro{} & 42\,000~\euro{} \\
+\quad Dell PowerStore 500T (PRA) & 1 & 68\,000~\euro{} & 68\,000~\euro{} \\
+\addlinespace
+\multicolumn{4}{l}{\textbf{Sauvegarde}} \\
+\quad Veeam B\&R Enterprise Plus (par socket) & 12 & 2\,400~\euro{} & 28\,800~\euro{} \\
+\quad NAS Synology RS3621RPxs+ (12x16~To) & 1 & 11\,500~\euro{} & 11\,500~\euro{} \\
+\quad Robot bandes Dell PowerVault TL1000 + LTO-9 & 1 & 9\,800~\euro{} & 9\,800~\euro{} \\
+\quad Cartouches LTO-9 (18~To) & 20 & 95~\euro{} & 1\,900~\euro{} \\
+\midrule
+\multicolumn{3}{r}{\textbf{Total LOT 1}} & \textbf{585\,200~\euro{}} \\
+\bottomrule
+\end{tabularx}
+\caption{Chiffrage LOT 1 -- Infrastructure c\oe ur}
+\label{tab:prix_lot1}
+\end{table}
+
+\section{LOT 2 -- Réseau}
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{L{5.5cm}C{1cm}R{1.8cm}R{2.5cm}}
+\toprule
+\textbf{Désignation} & \textbf{Qté} & \textbf{PU HT} & \textbf{Total HT} \\
+\midrule
+\multicolumn{4}{l}{\textbf{C\oe ur de réseau datacenter}} \\
+\quad Cisco Nexus 93180YC-FX3 (spine) & 2 & 14\,500~\euro{} & 29\,000~\euro{} \\
+\quad Cisco Nexus 9348GC-FXP (leaf) & 2 & 9\,200~\euro{} & 18\,400~\euro{} \\
+\addlinespace
+\multicolumn{4}{l}{\textbf{Firewalling}} \\
+\quad FortiGate 600F (DC, cluster) & 2 & 16\,500~\euro{} & 33\,000~\euro{} \\
+\quad FortiGate 60F (sites SD-WAN) & 21 & 1\,250~\euro{} & 26\,250~\euro{} \\
+\quad FortiManager VM (licence 3 ans) & 1 & 9\,500~\euro{} & 9\,500~\euro{} \\
+\quad FortiAnalyzer VM (licence 3 ans) & 1 & 7\,800~\euro{} & 7\,800~\euro{} \\
+\addlinespace
+\multicolumn{4}{l}{\textbf{Commutation sites}} \\
+\quad Cisco Catalyst 9300-48P (distribution) & 42 & 5\,400~\euro{} & 226\,800~\euro{} \\
+\quad Cisco Catalyst 9200-48P (accès) & 132 & 2\,700~\euro{} & 356\,400~\euro{} \\
+\quad Cisco Catalyst 9200-24P (accès) & 42 & 1\,850~\euro{} & 77\,700~\euro{} \\
+\quad Licences Cisco DNA Essentials (3 ans) & 216 & 320~\euro{} & 69\,120~\euro{} \\
+\addlinespace
+\multicolumn{4}{l}{\textbf{Câblage structuré Cat~6A}} \\
+\quad Point d'accès câblé (prise + câble + brassage) & 9\,804 & 175~\euro{} & 1\,715\,700~\euro{} \\
+\quad Liaison fibre optique inter-LT (OS2) & 84 & 2\,200~\euro{} & 184\,800~\euro{} \\
+\quad Baies de brassage 42U équipées & 85 & 2\,800~\euro{} & 238\,000~\euro{} \\
+\quad Onduleurs baies (Eaton 5PX 3kVA) & 85 & 1\,650~\euro{} & 140\,250~\euro{} \\
+\addlinespace
+\multicolumn{4}{l}{\textbf{WAN (abonnements 36 mois)}} \\
+\quad Liens MPLS (100-200~Mbps, 21 sites + 2 DC) & 23 & 14\,400~\euro{} & 331\,200~\euro{} \\
+\quad Liens Internet FTTH/FTTO (21 sites + 2 DC) & 23 & 3\,240~\euro{} & 74\,520~\euro{} \\
+\midrule
+\multicolumn{3}{r}{\textbf{Total LOT 2}} & \textbf{3\,538\,440~\euro{}} \\
+\bottomrule
+\end{tabularx}
+\caption{Chiffrage LOT 2 -- Réseau}
+\label{tab:prix_lot2}
+\end{table}
+
+\section{LOT 3 -- WiFi}
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{L{5.5cm}C{1cm}R{1.8cm}R{2.5cm}}
+\toprule
+\textbf{Désignation} & \textbf{Qté} & \textbf{PU HT} & \textbf{Total HT} \\
+\midrule
+Cisco Catalyst 9130AXI (indoor) & 303 & 780~\euro{} & 236\,340~\euro{} \\
+Cisco IW9167E (froid négatif) & 36 & 1\,450~\euro{} & 52\,200~\euro{} \\
+Cisco Catalyst 9800-L (contrôleur HA) & 2 & 8\,500~\euro{} & 17\,000~\euro{} \\
+Licences Cisco DNA Ess. WiFi (3 ans) & 339 & 110~\euro{} & 37\,290~\euro{} \\
+Supports de montage + câbles & 339 & 35~\euro{} & 11\,865~\euro{} \\
+\midrule
+\multicolumn{3}{r}{\textbf{Total LOT 3}} & \textbf{354\,695~\euro{}} \\
+\bottomrule
+\end{tabularx}
+\caption{Chiffrage LOT 3 -- WiFi}
+\label{tab:prix_lot3}
+\end{table}
+
+\section{LOT 4 -- Téléphonie}
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{L{5.5cm}C{1cm}R{1.8cm}R{2.5cm}}
+\toprule
+\textbf{Désignation} & \textbf{Qté} & \textbf{PU HT} & \textbf{Total HT} \\
+\midrule
+3CX Enterprise Edition (256 appels simult.) & 1 & 5\,950~\euro{} & 5\,950~\euro{} \\
+3CX licence annuelle maintenance (x3 ans) & 3 & 2\,975~\euro{} & 8\,925~\euro{} \\
+Yealink T46U (poste avancé) & 320 & 185~\euro{} & 59\,200~\euro{} \\
+Yealink T33G (poste standard) & 480 & 78~\euro{} & 37\,440~\euro{} \\
+Yealink W80B (base DECT multi-cell) & 50 & 320~\euro{} & 16\,000~\euro{} \\
+Yealink W56H (combiné DECT) & 140 & 85~\euro{} & 11\,900~\euro{} \\
+Jabra Evolve2 55 (casque USB/BT) & 200 & 165~\euro{} & 33\,000~\euro{} \\
+Trunk SIP OVH (100 canaux, 36 mois) & 36 & 480~\euro{} & 17\,280~\euro{} \\
+\midrule
+\multicolumn{3}{r}{\textbf{Total LOT 4}} & \textbf{189\,695~\euro{}} \\
+\bottomrule
+\end{tabularx}
+\caption{Chiffrage LOT 4 -- Téléphonie}
+\label{tab:prix_lot4}
+\end{table}
+
+\section{LOT 5 -- Postes de travail et terminaux}
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{L{5.5cm}C{1cm}R{1.8cm}R{2.5cm}}
+\toprule
+\textbf{Désignation} & \textbf{Qté} & \textbf{PU HT} & \textbf{Total HT} \\
+\midrule
+Dell OptiPlex 7010 SFF (fixe) & 650 & 720~\euro{} & 468\,000~\euro{} \\
+Dell E2723H 27" (écran) & 1\,350 & 270~\euro{} & 364\,500~\euro{} \\
+Dell Latitude 5550 (portable) & 180 & 1\,050~\euro{} & 189\,000~\euro{} \\
+Dell Latitude 5430 Rugged (durci) & 145 & 2\,100~\euro{} & 304\,500~\euro{} \\
+Zebra VC83 (PC chariot) & 120 & 2\,700~\euro{} & 324\,000~\euro{} \\
+Zebra TC52x (terminal code-barres) & 200 & 550~\euro{} & 110\,000~\euro{} \\
+Samsung Galaxy XCover 6 Pro & 780 & 340~\euro{} & 265\,200~\euro{} \\
+\midrule
+\multicolumn{3}{r}{\textbf{Total LOT 5}} & \textbf{2\,025\,200~\euro{}} \\
+\bottomrule
+\end{tabularx}
+\caption{Chiffrage LOT 5 -- Postes de travail et terminaux}
+\label{tab:prix_lot5}
+\end{table}
+
+\section{LOT 6 -- Services et main-d'\oe uvre}
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{L{5.5cm}C{1.5cm}R{1.5cm}R{2.5cm}}
+\toprule
+\textbf{Désignation} & \textbf{Jours} & \textbf{TJM HT} & \textbf{Total HT} \\
+\midrule
+\multicolumn{4}{l}{\textbf{Gestion de projet}} \\
+\quad Chef de projet (12 mois) & 220 & 650~\euro{} & 143\,000~\euro{} \\
+\quad Assistante projet & 60 & 400~\euro{} & 24\,000~\euro{} \\
+\addlinespace
+\multicolumn{4}{l}{\textbf{Études et conception}} \\
+\quad Architecte réseau & 30 & 750~\euro{} & 22\,500~\euro{} \\
+\quad Architecte systèmes & 20 & 750~\euro{} & 15\,000~\euro{} \\
+\quad Étude de couverture WiFi (site survey) & 25 & 600~\euro{} & 15\,000~\euro{} \\
+\addlinespace
+\multicolumn{4}{l}{\textbf{Déploiement infrastructure c\oe ur}} \\
+\quad Ingénieur systèmes (DC) & 30 & 600~\euro{} & 18\,000~\euro{} \\
+\quad Ingénieur réseau (DC) & 20 & 600~\euro{} & 12\,000~\euro{} \\
+\addlinespace
+\multicolumn{4}{l}{\textbf{Déploiement réseau et câblage sites}} \\
+\quad Techniciens câblage (équipes de 3) & 450 & 350~\euro{} & 157\,500~\euro{} \\
+\quad Techniciens réseau (configuration) & 120 & 450~\euro{} & 54\,000~\euro{} \\
+\addlinespace
+\multicolumn{4}{l}{\textbf{Déploiement WiFi}} \\
+\quad Techniciens WiFi & 45 & 450~\euro{} & 20\,250~\euro{} \\
+\addlinespace
+\multicolumn{4}{l}{\textbf{Déploiement téléphonie}} \\
+\quad Techniciens téléphonie & 35 & 450~\euro{} & 15\,750~\euro{} \\
+\addlinespace
+\multicolumn{4}{l}{\textbf{Déploiement postes de travail}} \\
+\quad Techniciens poste de travail & 80 & 350~\euro{} & 28\,000~\euro{} \\
+\addlinespace
+\multicolumn{4}{l}{\textbf{Migration et recette}} \\
+\quad Ingénieur migration applicative & 25 & 650~\euro{} & 16\,250~\euro{} \\
+\quad Recette et tests & 20 & 550~\euro{} & 11\,000~\euro{} \\
+\addlinespace
+\multicolumn{4}{l}{\textbf{Formation et documentation}} \\
+\quad Formation administrateurs (5 jours) & 5 & 1\,200~\euro{} & 6\,000~\euro{} \\
+\quad Formation techniciens (3 jours) & 3 & 1\,200~\euro{} & 3\,600~\euro{} \\
+\quad Rédaction documentation (DOE) & 15 & 500~\euro{} & 7\,500~\euro{} \\
+\midrule
+\multicolumn{3}{r}{\textbf{Total LOT 6}} & \textbf{569\,350~\euro{}} \\
+\bottomrule
+\end{tabularx}
+\caption{Chiffrage LOT 6 -- Services et main-d'\oe uvre}
+\label{tab:prix_lot6}
+\end{table}
+
+\section{LOT 7 -- Maintenance et support (3 ans)}
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{L{6cm}C{1.2cm}R{1.5cm}R{2.5cm}}
+\toprule
+\textbf{Désignation} & \textbf{Durée} & \textbf{Coût/an} & \textbf{Total 3 ans} \\
+\midrule
+Maintenance serveurs Dell ProSupport & 3 ans & 12\,000~\euro{} & 36\,000~\euro{} \\
+Maintenance stockage Dell ProSupport & 3 ans & 18\,000~\euro{} & 54\,000~\euro{} \\
+Maintenance réseau Cisco SNTC & 3 ans & 38\,000~\euro{} & 114\,000~\euro{} \\
+Maintenance firewalls Fortinet FC & 3 ans & 14\,000~\euro{} & 42\,000~\euro{} \\
+Support ToshiHaut (HO, 5j/7) & 3 ans & 36\,000~\euro{} & 108\,000~\euro{} \\
+Astreinte 24/7 (nuits et week-ends) & 3 ans & 18\,000~\euro{} & 54\,000~\euro{} \\
+\midrule
+\multicolumn{3}{r}{\textbf{Total LOT 7}} & \textbf{408\,000~\euro{}} \\
+\bottomrule
+\end{tabularx}
+\caption{Chiffrage LOT 7 -- Maintenance et support}
+\label{tab:prix_lot7}
+\end{table}
+
+\section{Synthèse financière}
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{llr}
+\toprule
+\textbf{Lot} & \textbf{Désignation} & \textbf{Montant HT} \\
+\midrule
+LOT 1 & Infrastructure c\oe ur (Datacenter) & 585\,200~\euro{} \\
+LOT 2 & Réseau (c\oe ur, LAN, WAN, câblage, sécurité) & 3\,538\,440~\euro{} \\
+LOT 3 & WiFi & 354\,695~\euro{} \\
+LOT 4 & Téléphonie & 189\,695~\euro{} \\
+LOT 5 & Postes de travail et terminaux & 2\,025\,200~\euro{} \\
+LOT 6 & Services et main-d'\oe uvre & 569\,350~\euro{} \\
+LOT 7 & Maintenance et support (3 ans) & 408\,000~\euro{} \\
+\midrule
+\multicolumn{2}{l}{\textbf{TOTAL GÉNÉRAL HT}} & \textbf{7\,670\,580~\euro{}} \\
+\addlinespace
+\multicolumn{2}{l}{TVA (20\%)} & 1\,534\,116~\euro{} \\
+\midrule
+\multicolumn{2}{l}{\textbf{TOTAL GÉNÉRAL TTC}} & \textbf{9\,204\,696~\euro{}} \\
+\bottomrule
+\end{tabular}
+\caption{Synthèse financière globale}
+\label{tab:synthese_prix}
+\end{table}
+
+\subsection{Répartition CAPEX / OPEX}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{lr}
+\toprule
+\textbf{Nature} & \textbf{Montant HT} \\
+\midrule
+CAPEX (investissement : équipements + déploiement) & 5\,643\,180~\euro{} \\
+OPEX (récurrent sur 3 ans : hébergement, WAN, maintenance) & 2\,027\,400~\euro{} \\
+\midrule
+\textbf{Total} & \textbf{7\,670\,580~\euro{}} \\
+\bottomrule
+\end{tabular}
+\caption{Répartition CAPEX / OPEX}
+\label{tab:capex_opex}
+\end{table}
+
+\subsection{Coût par utilisateur}
+
+Le coût total du projet ramené au nombre d'utilisateurs permet de situer l'investissement :
+
+\begin{itemize}
+\item \textbf{Coût total sur 3 ans} : 7\,670\,580~\euro{}~HT
+\item \textbf{Nombre d'utilisateurs} : 2\,500
+\item \textbf{Coût par utilisateur sur 3 ans} : 3\,068~\euro{}~HT, soit \textbf{$\sim$85~\euro{}/mois/utilisateur}
+\end{itemize}
+
+Ce ratio est cohérent avec les standards du marché pour une infrastructure complète (poste de travail + réseau + téléphonie + datacenter) dans le secteur de la logistique industrielle, où les contraintes de disponibilité et de robustesse des équipements (terminaux durcis, WiFi entrepôt, DECT) tirent les coûts vers le haut par rapport à un environnement tertiaire classique.
+
+\subsection{Options proposées}
+
+En complément de la proposition de base, ToshiHaut propose les options suivantes :
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{L{6cm}R{2.5cm}L{4.5cm}}
+\toprule
+\textbf{Option} & \textbf{Montant HT} & \textbf{Description} \\
+\midrule
+Option 1 : Extension WiFi 6E & 45\,000~\euro{} & Remplacement de 50 AP par des modèles WiFi 6E (C9136I) pour les zones à très haute densité \\
+\addlinespace
+Option 2 : SOC externalisé & 72\,000~\euro{}/an & Centre opérationnel de sécurité 24/7 avec analyse des logs FortiAnalyzer et réponse aux incidents \\
+\bottomrule
+\end{tabularx}
+\caption{Options complémentaires}
+\label{tab:options}
+\end{table}
+
+
+% ============================================================
+% ANNEXES
+% ============================================================
+\appendix
+\chapter{Annexes}
+
+\section{Glossaire}
+
+\begin{longtable}{p{3.5cm}p{10cm}}
+\toprule
+\textbf{Terme} & \textbf{Définition} \\
+\midrule
+\endhead
+802.1X & Norme IEEE de contrôle d'accès réseau par port, utilisée pour authentifier les équipements avant de leur accorder l'accès au réseau \\
+\addlinespace
+AS/400 & Système informatique IBM (aujourd'hui IBM~i sur Power) utilisé historiquement pour les applications de gestion et de logistique \\
+\addlinespace
+CAPEX & Capital Expenditure -- dépenses d'investissement \\
+\addlinespace
+CoS & Class of Service -- classification des flux réseau pour la QoS \\
+\addlinespace
+DECT & Digital Enhanced Cordless Telecommunications -- standard de téléphonie sans fil \\
+\addlinespace
+DMZ & Demilitarized Zone -- zone réseau intermédiaire entre le réseau interne et Internet \\
+\addlinespace
+DSCP & Differentiated Services Code Point -- marquage QoS dans l'en-tête IP \\
+\addlinespace
+EAP-TLS & Extensible Authentication Protocol - Transport Layer Security -- méthode d'authentification 802.1X par certificat \\
+\addlinespace
+ESXi & Hyperviseur bare-metal de VMware pour la virtualisation \\
+\addlinespace
+FTTH & Fiber To The Home -- fibre optique jusqu'à l'abonné \\
+\addlinespace
+FTTO & Fiber To The Office -- fibre optique dédiée aux entreprises \\
+\addlinespace
+GTR & Garantie de Temps de Rétablissement -- engagement contractuel de l'opérateur \\
+\addlinespace
+HLD / LLD & High Level Design / Low Level Design -- documents d'architecture \\
+\addlinespace
+IGMP & Internet Group Management Protocol -- gestion des groupes multicast \\
+\addlinespace
+IOPS & Input/Output Operations Per Second -- mesure de performance du stockage \\
+\addlinespace
+iSCSI & Internet Small Computer Systems Interface -- protocole de stockage sur IP \\
+\addlinespace
+LACP & Link Aggregation Control Protocol -- agrégation de liens réseau \\
+\addlinespace
+MAB & MAC Authentication Bypass -- authentification par adresse MAC \\
+\addlinespace
+MPLS & MultiProtocol Label Switching -- technologie de réseau privé opérateur \\
+\addlinespace
+MVPN & Multicast VPN -- extension multicast du MPLS-VPN \\
+\addlinespace
+NAS & Network Attached Storage -- stockage réseau \\
+\addlinespace
+NPS & Network Policy Server -- serveur RADIUS Microsoft \\
+\addlinespace
+OPEX & Operational Expenditure -- dépenses de fonctionnement \\
+\addlinespace
+PIM-SM & Protocol Independent Multicast - Sparse Mode -- routage multicast \\
+\addlinespace
+PoE+ & Power over Ethernet (802.3at) -- alimentation électrique via câble réseau (30W max) \\
+\addlinespace
+PRA & Plan de Reprise d'Activité -- procédure de reprise après sinistre \\
+\addlinespace
+RADIUS & Remote Authentication Dial-In User Service -- serveur d'authentification \\
+\addlinespace
+RPO & Recovery Point Objective -- perte de données maximale acceptée \\
+\addlinespace
+RTO & Recovery Time Objective -- durée d'interruption maximale acceptée \\
+\addlinespace
+RPVST+ & Rapid Per-VLAN Spanning Tree Plus -- protocole anti-boucle réseau \\
+\addlinespace
+SAN & Storage Area Network -- réseau de stockage \\
+\addlinespace
+SD-WAN & Software-Defined Wide Area Network -- gestion intelligente des liens WAN \\
+\addlinespace
+SEVESO & Directive européenne imposant des mesures de sécurité pour les sites industriels manipulant des substances dangereuses \\
+\addlinespace
+SIP & Session Initiation Protocol -- protocole de signalisation téléphonique IP \\
+\addlinespace
+SLA & Service Level Agreement -- accord de niveau de service \\
+\addlinespace
+SNMP & Simple Network Management Protocol -- protocole de supervision réseau \\
+\addlinespace
+SSID & Service Set Identifier -- nom d'un réseau WiFi \\
+\addlinespace
+TETRA & Terrestrial Trunked Radio -- standard de radio numérique professionnelle \\
+\addlinespace
+VLAN & Virtual Local Area Network -- réseau local virtuel \\
+\addlinespace
+VPN & Virtual Private Network -- réseau privé virtuel \\
+\addlinespace
+WPA3 & Wi-Fi Protected Access 3 -- protocole de sécurité WiFi \\
+\bottomrule
+\end{longtable}
+
+\section{Conditions de validité}
+
+\begin{itemize}
+\item La présente offre est valable \textbf{90 jours} à compter de sa date d'émission (15 novembre 2024).
+\item Les prix indiqués sont fermes et non révisables pour la durée du marché, sous réserve que la commande soit passée dans le délai de validité de l'offre.
+\item Les délais de livraison des équipements sont donnés à titre indicatif et peuvent varier en fonction de la disponibilité des constructeurs au moment de la commande.
+\item L'ensemble des prestations est soumis aux Conditions Générales de Vente de ToshiHaut SAS (disponibles sur demande).
+\item Les licences logicielles (VMware, Veeam, Cisco DNA, Fortinet, 3CX) sont soumises aux conditions de licence de leurs éditeurs respectifs.
+\end{itemize}
+
+\section{Conditions de paiement}
+
+Le règlement s'effectue selon l'échéancier suivant :
+\begin{itemize}
+\item \textbf{20\%} à la commande (acompte) ;
+\item \textbf{30\%} à la livraison des équipements ;
+\item \textbf{30\%} à la recette du site pilote ;
+\item \textbf{15\%} à la recette finale ;
+\item \textbf{5\%} à l'issue de la période de garantie (3 mois après mise en exploitation).
+\end{itemize}
+
+Les prestations de maintenance et de support (LOT~7) ainsi que les abonnements WAN sont facturés mensuellement.
+
+\vspace{2cm}
+
+\begin{center}
+\rule{8cm}{0.4pt}
+
+\vspace{0.5cm}
+\textbf{Antoine Mercier}\\
+Directeur Général -- ToshiHaut SAS\\
+Fait à Toulouse, le 15 novembre 2024
+\end{center}
+
+\end{document}
