@@ -94,11 +94,11 @@
 \setcounter{tocdepth}{3}
 \setcounter{secnumdepth}{3}
 
-\begin{document}
-
 % ============================================================
 % PAGE DE GARDE
 % ============================================================
+\begin{document}
+
 \begin{titlepage}
 \begin{tikzpicture}[remember picture, overlay]
   % Fond supérieur
@@ -111,15 +111,15 @@
   % Titre du document
   \node[anchor=west, font=\fontsize{26}{32}\selectfont\bfseries, text width=15cm, thbleu] at ([xshift=2.5cm, yshift=-11cm]current page.north west) {Réponse à l'appel d'offres\\Infrastructure informatique};
   \node[anchor=west, font=\fontsize{18}{22}\selectfont, text width=15cm, thorange] at ([xshift=2.5cm, yshift=-13.5cm]current page.north west) {Société BOOM};
+  \node[anchor=west, font=\fontsize{16}{20}\selectfont\bfseries, text width=15cm, thbleu] at ([xshift=2.5cm, yshift=-14.35cm]current page.north west) {UCBL -- BEPC 2026};
   % Informations
-  \node[anchor=north west, font=\large, text width=12cm, thgrisfonce] at ([xshift=2.5cm, yshift=-15.2cm]current page.north west) {
-    \begin{tabular}{ll}
-    \textbf{Référence} & TH-AO-2024-BOOM-001 \\[4pt]
-    \textbf{Version} & 1.0 \\[4pt]
-    \textbf{Date} & 15 novembre 2024 \\[4pt]
-    \textbf{Classification} & Confidentiel \\[4pt]
-    \textbf{Rédacteurs} & Julien Dubois, Sophie Laurent \\[4pt]
-    \textbf{Validation} & Antoine Mercier, Directeur Général
+  \node[anchor=north west, font=\small, text width=15.5cm, thgrisfonce] at ([xshift=2.5cm, yshift=-15.25cm]current page.north west) {
+    \begin{tabular}{@{}ll@{}}
+    \textbf{Référence} & TH-AO-2026-BOOM-001 \\[3pt]
+    \textbf{Version} & 1.0 \\[3pt]
+    \textbf{Date} & 4 juin 2026 \\[3pt]
+    \textbf{Classification} & Confidentiel \\[3pt]
+    \textbf{Rédacteurs} & Badreddine MAHDI, Marc FAUSSURIER, Amine OUALI \\[3pt]
     \end{tabular}
   };
   % Pied de page
@@ -228,29 +228,32 @@ Pour répondre à un projet de cette envergure, ToshiHaut constitue une équipe 
 \begin{figure}[H]
 \centering
 \begin{tikzpicture}[
-  every node/.style={draw, rounded corners, minimum width=3.2cm, minimum height=1cm, align=center, font=\small},
-  level 1/.style={sibling distance=4.5cm},
-  edge from parent/.style={draw, -Stealth, thick, thbleu},
-  dir/.style={fill=thbleu, text=white, font=\small\bfseries},
-  chef/.style={fill=thorange, text=white, font=\small\bfseries},
-  tech/.style={fill=thbleu!15, text=thbleu},
+  every node/.style={draw, rounded corners, minimum height=0.9cm, align=center, font=\scriptsize},
+  dir/.style={fill=thbleu, text=white, font=\scriptsize\bfseries, text width=4cm},
+  chef/.style={fill=thorange, text=white, font=\scriptsize\bfseries, text width=3.8cm},
+  tech/.style={fill=thbleu!15, text=thbleu, text width=3.7cm},
+  fleche/.style={-Stealth, thick, thbleu}
 ]
-  \node[dir] (dg) {Antoine Mercier\\Directeur Général}
-    child {node[dir] (dt) {Sophie Laurent\\Directrice Technique}
-      child {node[chef] (cp) {Julien Dubois\\Chef de Projet}}
-    };
-  \node[tech, below left=1.5cm and -0.5cm of cp] (rs) {Thomas Bernard\\Resp. Réseau};
-  \node[tech, below=1.5cm of cp] (is) {Camille Martin\\Ing. Systèmes};
-  \node[tech, below right=1.5cm and -0.5cm of cp] (it) {Marc Lefèvre\\Ing. Télécom};
-  \node[tech, below=1.2cm of rs] (t1) {3 Techniciens\\Déploiement};
-  \node[tech, below=1.2cm of is] (t2) {2 Techniciens\\Systèmes};
-  \node[tech, below=1.2cm of it] (t3) {2 Techniciens\\Câblage};
-  \draw[-Stealth, thick, thbleu] (cp) -- (rs);
-  \draw[-Stealth, thick, thbleu] (cp) -- (is);
-  \draw[-Stealth, thick, thbleu] (cp) -- (it);
-  \draw[-Stealth, thick, thbleu] (rs) -- (t1);
-  \draw[-Stealth, thick, thbleu] (is) -- (t2);
-  \draw[-Stealth, thick, thbleu] (it) -- (t3);
+  \node[dir] (dg) at (0,4.7) {Antoine Mercier\\Directeur Général};
+  \node[dir] (dt) at (0,3.55) {Sophie Laurent\\Directrice Technique};
+  \node[chef] (cp) at (0,2.4) {Julien Dubois\\Chef de Projet};
+
+  \node[tech] (rs) at (-5.1,1.05) {Badreddine MAHDI\\Resp. Réseau};
+  \node[tech] (is) at (0,1.05) {Marc FAUSSURIER\\Ing. Systèmes};
+  \node[tech] (it) at (5.1,1.05) {Amine OUALI\\Ing. Télécom};
+
+  \node[tech] (t1) at (-5.1,-0.3) {3 Techniciens\\Déploiement};
+  \node[tech] (t2) at (0,-0.3) {2 Techniciens\\Systèmes};
+  \node[tech] (t3) at (5.1,-0.3) {2 Techniciens\\Câblage};
+
+  \draw[fleche] (dg) -- (dt);
+  \draw[fleche] (dt) -- (cp);
+  \draw[fleche] (cp) -- (rs);
+  \draw[fleche] (cp) -- (is);
+  \draw[fleche] (cp) -- (it);
+  \draw[fleche] (rs) -- (t1);
+  \draw[fleche] (is) -- (t2);
+  \draw[fleche] (it) -- (t3);
 \end{tikzpicture}
 \caption{Organigramme de l'équipe projet ToshiHaut pour le marché BOOM}
 \label{fig:organigramme}
@@ -270,17 +273,17 @@ Ingénieure INSA Lyon (promotion 2007), Sophie dispose de quinze ans d'expérien
 
 Titulaire d'un Master en gestion de projets informatiques (Université Toulouse III), Julien possède huit ans d'expérience en conduite de projets d'infrastructure. Il a piloté avec succès le déploiement de l'infrastructure de LogiFrance (18 sites, 1200 utilisateurs) en 2022. Certifié PMP et ITIL v4, il sera l'interlocuteur unique de BOOM pour le suivi opérationnel du projet.
 
-\textbf{Thomas Bernard -- Responsable Réseau}
+\textbf{Badreddine MAHDI -- Responsable Réseau}
 
-CCNP Entreprise et certifié Fortinet NSE7, Thomas cumule dix ans d'expérience en conception et administration de réseaux d'entreprise. Il a conçu l'architecture WAN SD-WAN de ChimExpress (25 sites) et maîtrise les environnements multi-sites à contraintes de disponibilité élevées.
+CCNP Entreprise et certifié Fortinet NSE7, Badreddine cumule dix ans d'expérience en conception et administration de réseaux d'entreprise. Il a conçu l'architecture WAN SD-WAN de ChimExpress (25 sites) et maîtrise les environnements multi-sites à contraintes de disponibilité élevées.
 
-\textbf{Camille Martin -- Ingénieure Systèmes}
+\textbf{Marc FAUSSURIER -- Ingénieur Systèmes}
 
-Certifiée VMware VCP-DCV et ayant une solide expérience sur les environnements IBM Power (AS/400, IBM~i), Camille est responsable de la conception de l'infrastructure de virtualisation et de stockage. Elle a mené la migration d'un parc de 200 machines virtuelles vers une architecture hyperconvergée pour le compte de FroidLogistic.
+Certifié VMware VCP-DCV et ayant une solide expérience sur les environnements IBM Power (AS/400, IBM~i), Marc est responsable de la conception de l'infrastructure de virtualisation et de stockage. Il a mené la migration d'un parc de 200 machines virtuelles vers une architecture hyperconvergée pour le compte de FroidLogistic.
 
-\textbf{Marc Lefèvre -- Ingénieur Télécom}
+\textbf{Amine OUALI -- Ingénieur Télécom}
 
-Spécialiste des solutions de téléphonie sur IP et de communications unifiées, Marc est certifié 3CX Advanced et possède une expertise reconnue sur les déploiements DECT en environnement industriel. Il a déployé la téléphonie de la plateforme logistique de TransNord (600 postes, couverture DECT entrepôt).
+Spécialiste des solutions de téléphonie sur IP et de communications unifiées, Amine est certifié 3CX Advanced et possède une expertise reconnue sur les déploiements DECT en environnement industriel. Il a déployé la téléphonie de la plateforme logistique de TransNord (600 postes, couverture DECT entrepôt).
 
 \section{Nos références clients}
 
@@ -289,7 +292,7 @@ ToshiHaut intervient régulièrement dans le secteur de la logistique et de l'in
 \begin{table}[H]
 \centering
 \small
-\begin{tabularx}{\textwidth}{L{2.8cm}L{2.2cm}L{4cm}L{2cm}R{2cm}}
+\begin{tabularx}{\textwidth}{@{}L{2.6cm}L{2.9cm}L{4.3cm}C{1.7cm}R{1.7cm}@{}}
 \toprule
 \textbf{Client} & \textbf{Secteur} & \textbf{Périmètre} & \textbf{Année} & \textbf{Montant} \\
 \midrule
@@ -336,7 +339,7 @@ Zebra Technologies & Terminaux industriels & Registered Partner \\
 
 \section{Notre méthodologie projet}
 
-ToshiHaut applique une méthodologie projet éprouvée, inspirée du référentiel PRINCE2 et adaptée aux spécificités des déploiements d'infrastructure. Notre approche se structure en cinq phases :
+ToshiHaut applique une méthodologie projet inspirée du référentiel PRINCE2 et adaptée aux déploiements d'infrastructure. L'approche se structure en cinq phases :
 
 \begin{enumerate}
 \item \textbf{Phase d'étude détaillée (Cadrage)} -- Audit des installations existantes, recueil précis des besoins par service, levée des contraintes techniques (accès sites, fenêtres de maintenance), validation du design avec les équipes BOOM.
@@ -364,7 +367,7 @@ ToshiHaut est certifiée ISO~9001:2015 pour ses activités de conception et dép
 \item Des enquêtes de satisfaction à chaque jalon du projet.
 \end{itemize}
 
-Notre certification ISO~27001:2022 garantit par ailleurs que les données et informations de BOOM seront manipulées dans le respect des meilleures pratiques de sécurité de l'information tout au long du projet.
+Notre certification ISO~27001:2022 encadre le traitement des données et informations de BOOM pendant toute la durée du projet.
 
 
 % ============================================================
@@ -374,7 +377,7 @@ Notre certification ISO~27001:2022 garantit par ailleurs que les données et inf
 
 \section{Compréhension du contexte}
 
-La société BOOM occupe une position de premier plan sur le marché français du stockage, de la préparation et de la livraison de produits chimiques et de marchandises nécessitant une chaîne du froid. Avec un chiffre d'affaires de 800~M\euro{} et un effectif de 2500 personnes répartis sur 21 sites, BOOM opère dans un environnement à forte criticité où la continuité d'activité constitue un enjeu majeur.
+La société BOOM intervient sur le marché français du stockage, de la préparation et de la livraison de produits chimiques et de marchandises nécessitant une chaîne du froid. Avec un chiffre d'affaires de 800~M\euro{} et un effectif de 2500 personnes répartis sur 21 sites, BOOM dépend d'une continuité d'activité élevée sur ses opérations logistiques.
 
 L'infrastructure informatique actuelle de BOOM, bien que fonctionnelle, arrive en fin de vie et ne répond plus aux exigences de performance, de sécurité et d'évolutivité nécessaires pour accompagner la croissance de l'entreprise et les transformations à venir. Le présent appel d'offres porte sur le remplacement complet de cette infrastructure, câblage compris, ainsi que le remplacement de l'ensemble des liaisons inter-sites.
 
@@ -384,7 +387,7 @@ L'infrastructure de BOOM s'articule autour de trois types de sites distincts, ch
 
 \begin{table}[H]
 \centering
-\begin{tabularx}{\textwidth}{L{3cm}C{1.5cm}L{4cm}L{5cm}}
+\begin{tabularx}{\textwidth}{@{}L{3.1cm}C{1.8cm}L{4.2cm}L{5.1cm}@{}}
 \toprule
 \textbf{Type de site} & \textbf{Nombre} & \textbf{Caractéristiques} & \textbf{Contraintes} \\
 \midrule
@@ -406,7 +409,7 @@ La diversité des métiers présents chez BOOM se traduit par des besoins inform
 \begin{table}[H]
 \centering
 \small
-\begin{tabularx}{\textwidth}{L{2.5cm}C{1.2cm}L{3.5cm}L{5.5cm}}
+\begin{tabularx}{\textwidth}{@{}L{2.6cm}C{1.6cm}L{3.3cm}L{5.6cm}@{}}
 \toprule
 \textbf{Service} & \textbf{Effectif} & \textbf{Localisation} & \textbf{Équipements nécessaires} \\
 \midrule
@@ -433,7 +436,7 @@ Administratif & 500 & Tous sites & 80\% : fixe + 2 écrans. 20\% : portable + é
 
 \section{Enjeux identifiés}
 
-L'analyse du cahier des charges et de l'environnement de BOOM nous permet d'identifier cinq enjeux majeurs que notre proposition technique s'attache à adresser :
+Le cahier des charges fait ressortir cinq points structurants pour la réponse technique :
 
 \subsection{Continuité de service et haute disponibilité}
 
@@ -493,7 +496,7 @@ Conformément au cahier des charges, les éléments suivants ne font pas partie 
 
 \section{Stratégie d'hébergement}
 
-Compte tenu de la criticité des systèmes de BOOM (activité 24/7, sites SEVESO, flotte en mouvement permanent), nous recommandons une stratégie d'hébergement en datacenter professionnel plutôt qu'un hébergement dans les locaux de BOOM. Cette approche offre des garanties supérieures en termes de sécurité physique, de redondance électrique, de climatisation et de connectivité réseau.
+Compte tenu de la criticité des systèmes de BOOM (activité 24/7, sites SEVESO, flotte en mouvement permanent), nous recommandons une stratégie d'hébergement en datacenter professionnel plutôt qu'un hébergement dans les locaux de BOOM. Cette approche apporte un cadre maîtrisé pour la sécurité physique, la redondance électrique, la climatisation et la connectivité réseau.
 
 \subsection{Datacenter principal -- Equinix TH2 (Toulouse)}
 
@@ -511,7 +514,7 @@ Nous prévoyons la location de \textbf{3 baies 42U} dans une cage dédiée, avec
 
 \subsection{Datacenter secondaire (PRA) -- SFR Netcenter (Lyon)}
 
-Pour le plan de reprise d'activité, nous avons sélectionné le datacenter SFR Netcenter de Lyon (certifié Tier~III+), situé à plus de 250~km du site principal. Cette distance géographique garantit une indépendance vis-à-vis des risques régionaux (catastrophe naturelle, coupure réseau de collecte). Nous y prévoyons \textbf{1 baie 42U} avec 5~kW de puissance.
+Pour le plan de reprise d'activité, nous avons sélectionné le datacenter SFR Netcenter de Lyon (certifié Tier~III+), situé à plus de 250~km du site principal. Cette distance réduit l'exposition aux risques régionaux (catastrophe naturelle, coupure réseau de collecte). Nous y prévoyons \textbf{1 baie 42U} avec 5~kW de puissance.
 
 \begin{figure}[H]
 \centering
@@ -555,12 +558,12 @@ Pour le plan de reprise d'activité, nous avons sélectionné le datacenter SFR 
 
 \subsection{Choix de la plateforme}
 
-Nous proposons une architecture de virtualisation basée sur \textbf{VMware vSphere 8} (Standard Edition), qui constitue la référence du marché pour les environnements de production critiques. Ce choix se justifie par :
+Nous retenons une architecture de virtualisation basée sur \textbf{VMware vSphere 8} (Standard Edition). Ce choix se justifie par :
 
 \begin{itemize}
-\item La maturité et la fiabilité éprouvée de la plateforme en environnement de production ;
-\item La compatibilité native avec les outils de sauvegarde (Veeam) et de réplication ;
-\item La richesse fonctionnelle : vMotion (migration à chaud), DRS (répartition dynamique de charge), HA (haute disponibilité automatique) ;
+\item La maturité de la plateforme en environnement de production ;
+\item La compatibilité avec les outils de sauvegarde (Veeam) et de réplication ;
+\item Les fonctions attendues : vMotion (migration à chaud), DRS (répartition dynamique de charge), HA (haute disponibilité automatique) ;
 \item Les compétences existantes au sein de l'équipe informatique de BOOM (10 techniciens, 2 administrateurs systèmes).
 \end{itemize}
 
@@ -638,7 +641,7 @@ Gestion & iDRAC 9 Enterprise (administration à distance) \\
 
 \textbf{Capacité totale du cluster de production (4 serveurs)} :
 \begin{itemize}
-\item 256 c\oe urs physiques / 512 threads $\rightarrow$ largement dimensionné pour 330 vCPU ;
+\item 256 c\oe urs physiques / 512 threads $\rightarrow$ marge disponible par rapport aux 330 vCPU prévus ;
 \item 2\,048~Go de RAM $\rightarrow$ marge confortable par rapport aux 1\,651~Go nécessaires ;
 \item Tolérance de panne N+1 : en cas de perte d'un serveur, les 3 restants (192 c\oe urs, 1\,536~Go RAM) absorbent la charge.
 \end{itemize}
@@ -679,7 +682,7 @@ Protocoles & iSCSI, NFS, SMB \\
 \label{tab:stockage}
 \end{table}
 
-La capacité utile de 65~To couvre largement les 30~To de stockage SSD nécessaires pour les VM, avec une marge de croissance de plus de 100\%.
+La capacité utile de 65~To couvre les 30~To de stockage SSD nécessaires pour les VM et laisse une marge pour les extensions prévues.
 
 \subsection{Stockage capacitif (données froides)}
 
@@ -705,7 +708,7 @@ Nous proposons une politique de sauvegarde basée sur la règle du 3-2-1 :
 
 \begin{table}[H]
 \centering
-\begin{tabularx}{\textwidth}{L{2.5cm}C{2cm}C{2cm}C{2cm}C{2cm}}
+\begin{tabularx}{\textwidth}{@{}L{3cm}C{2.6cm}C{2.4cm}C{3.2cm}C{2cm}@{}}
 \toprule
 \textbf{Type} & \textbf{Fréquence} & \textbf{Rétention} & \textbf{Cible} & \textbf{RPO} \\
 \midrule
@@ -757,32 +760,38 @@ Le site de PRA (SFR Netcenter Lyon) héberge :
 \begin{figure}[H]
 \centering
 \begin{tikzpicture}[
-  serveur/.style={draw, thick, fill=thbleu!10, minimum width=2cm, minimum height=0.6cm, font=\footnotesize, rounded corners},
-  stockage/.style={draw, thick, fill=thorange!15, minimum width=2.5cm, minimum height=1.2cm, font=\footnotesize, align=center, rounded corners},
-  baie/.style={draw, thick, dashed, rounded corners, inner sep=10pt},
+  serveur/.style={draw, thick, fill=thbleu!10, minimum width=1.8cm, minimum height=0.52cm, font=\scriptsize, rounded corners},
+  stockage/.style={draw, thick, fill=thorange!15, minimum width=2.35cm, minimum height=1.05cm, font=\scriptsize, align=center, rounded corners},
+  baie/.style={draw, thick, dashed, rounded corners},
   fleche/.style={-Stealth, thick},
 ]
   % DC Principal
-  \node[font=\bfseries\small, thbleu] at (0,4.5) {DC Principal -- Toulouse};
-  \node[serveur] (s1) at (-1.5,3.5) {Serveur 1};
-  \node[serveur] (s2) at (-1.5,2.7) {Serveur 2};
-  \node[serveur] (s3) at (-1.5,1.9) {Serveur 3};
-  \node[serveur] (s4) at (-1.5,1.1) {Serveur 4};
-  \node[stockage] (st1) at (1.5,2.3) {PowerStore\\1200T\\96 To SSD};
-  \node[serveur] (as1) at (0,0) {AS/400 \#1};
-  \node[serveur] (as2) at (2.5,0) {AS/400 \#2};
-  \node[baie, fit=(s1)(s2)(s3)(s4)(st1)(as1)(as2), label=above:{}] (dcprin) {};
+  \node[font=\bfseries\small, thbleu] at (0,4.35) {DC Principal -- Toulouse};
+  \node[baie, minimum width=5.7cm, minimum height=4.25cm] (dcprin) at (0,2.0) {};
+  \node[serveur] (s1) at (-1.65,3.35) {Serveur 1};
+  \node[serveur] (s2) at (-1.65,2.65) {Serveur 2};
+  \node[serveur] (s3) at (-1.65,1.95) {Serveur 3};
+  \node[serveur] (s4) at (-1.65,1.25) {Serveur 4};
+  \node[stockage] (st1) at (1.15,2.45) {PowerStore\\1200T\\96 To SSD};
+  \node[serveur] (as1) at (-0.75,0.45) {AS/400 \#1};
+  \node[serveur] (as2) at (1.55,0.45) {AS/400 \#2};
 
   % DC PRA
-  \node[font=\bfseries\small, thbleu] at (9,4.5) {DC Secours -- Lyon};
-  \node[serveur] (s5) at (7.5,3.5) {Serveur 5};
-  \node[serveur] (s6) at (7.5,2.7) {Serveur 6};
-  \node[stockage] (st2) at (10.5,3.1) {PowerStore\\500T\\46 To SSD};
-  \node[baie, fit=(s5)(s6)(st2), label=above:{}] (dcpra) {};
+  \node[font=\bfseries\small, thbleu] at (7.5,4.35) {DC Secours -- Lyon};
+  \node[baie, minimum width=4.7cm, minimum height=3.15cm] (dcpra) at (7.5,2.35) {};
+  \node[serveur] (s5) at (6.35,3.15) {Serveur 5};
+  \node[serveur] (s6) at (6.35,2.35) {Serveur 6};
+  \node[stockage] (st2) at (8.55,2.75) {PowerStore\\500T\\46 To SSD};
 
   % Réplication
-  \draw[fleche, red!70!black, dashed] (st1.east) -- node[above, font=\footnotesize] {Réplication SAN} node[below, font=\footnotesize] {asynchrone (4h)} (st2.west);
-  \draw[fleche, thorange, dashed] ([yshift=-5pt]dcprin.east) -- node[below, font=\footnotesize, yshift=-3pt] {Veeam Replication} ([yshift=-5pt]dcpra.west);
+  \draw[fleche, red!70!black, dashed] (st1.east) -- (st2.west);
+  \draw[fleche, thorange, dashed] ([yshift=-13pt]dcprin.east) -- ([yshift=-13pt]dcpra.west);
+
+  % Légende
+  \draw[red!70!black, dashed, thick] (-2.35,-0.55) -- (-1.55,-0.55);
+  \node[anchor=west, font=\scriptsize, red!70!black] at (-1.45,-0.55) {Réplication SAN asynchrone (4 h)};
+  \draw[thorange, dashed, thick] (3.65,-0.55) -- (4.45,-0.55);
+  \node[anchor=west, font=\scriptsize, thorange] at (4.55,-0.55) {Veeam Replication};
 \end{tikzpicture}
 \caption{Architecture du Plan de Reprise d'Activité}
 \label{fig:pra}
@@ -830,63 +839,56 @@ L'architecture réseau proposée s'articule autour de trois niveaux :
 
 \begin{figure}[H]
 \centering
-\begin{tikzpicture}[scale=0.85, transform shape,
-  cloudnode/.style={draw, thick, fill=thgris, cloud, cloud puffs=12, cloud puff arc=120, minimum width=5cm, minimum height=2.5cm, align=center, font=\small\bfseries},
-  dcbox/.style={draw, thick, fill=thbleu!10, rounded corners, minimum width=3.8cm, minimum height=1.8cm, align=center, font=\small},
-  sitebox/.style={draw, thick, fill=thorange!10, rounded corners, minimum width=3cm, minimum height=1.5cm, align=center, font=\footnotesize},
-  fwbox/.style={draw, thick, fill=red!10, rounded corners, minimum width=2cm, minimum height=0.8cm, align=center, font=\footnotesize},
+\begin{tikzpicture}[
+  dcbox/.style={draw, thick, fill=thbleu!10, rounded corners, minimum width=2.65cm, minimum height=1.1cm, align=center, font=\scriptsize},
+  sitebox/.style={draw, thick, fill=thorange!10, rounded corners, minimum width=2.05cm, minimum height=0.78cm, align=center, font=\scriptsize},
+  fwbox/.style={draw, thick, fill=red!10, rounded corners, minimum width=1.5cm, minimum height=0.68cm, align=center, font=\scriptsize},
+  backbone/.style={draw, thick, fill=thbleu!12, rounded corners, minimum width=3.35cm, minimum height=0.95cm, align=center, font=\scriptsize\bfseries},
+  cloudnode/.style={draw, thick, fill=thgris, cloud, cloud puffs=11, cloud puff arc=120, minimum width=3.1cm, minimum height=1.35cm, align=center, font=\scriptsize\bfseries},
+  lienwan/.style={-Stealth, thick, thbleu},
+  lieninet/.style={-Stealth, thick, thgrisfonce, dashed},
+  liensite/.style={thick, thorange}
 ]
-  % Cloud MPLS
-  \node[cloudnode] (mpls) at (6,0) {MPLS\\Orange Business};
+  \node[cloudnode] (inet) at (0,2.95) {Internet};
+  \node[backbone] (mpls) at (0,0) {MPLS\\Orange Business};
 
-  % Internet
-  \node[cloudnode, minimum width=3.5cm, minimum height=2cm] (inet) at (13,0) {Internet};
+  \node[dcbox] (dc1) at (-4.6,4.25) {\textbf{DC Toulouse}\\4 serveurs + SAN\\2 AS/400};
+  \node[fwbox] (fw1) at (-4.6,2.25) {FortiGate\\600F (x2)};
+  \node[dcbox] (dc2) at (4.6,4.25) {\textbf{DC Lyon}\\PRA};
+  \node[fwbox] (fw2) at (4.6,2.25) {FortiGate\\200F};
 
-  % DC Principal
-  \node[dcbox] (dc1) at (0,4) {\textbf{DC Toulouse}\\4 serveurs + SAN\\2 AS/400};
-  \node[fwbox] (fw1) at (0,1.5) {FortiGate\\600F (x2)};
+  \draw[lienwan] (dc1.south) -- (fw1.north);
+  \draw[lienwan] (dc2.south) -- (fw2.north);
+  \draw[lienwan] (fw1.south) |- (mpls.west);
+  \draw[lienwan] (fw2.south) |- (mpls.east);
+  \draw[lieninet] (fw1.east) -- ++(1.05,0) |- (inet.west);
+  \draw[lieninet] (fw2.west) -- ++(-1.05,0) |- (inet.east);
 
-  % DC PRA
-  \node[dcbox] (dc2) at (13,4) {\textbf{DC Lyon}\\PRA};
-  \node[fwbox] (fw2) at (13,1.5) {FortiGate\\200F};
+  \node[fwbox, minimum width=1.25cm] (fws1) at (-5.2,-1.7) {FG-60F};
+  \node[fwbox, minimum width=1.25cm] (fws2) at (-2.6,-1.7) {FG-60F};
+  \node[fwbox, minimum width=1.25cm] (fws3) at (0,-1.7) {FG-60F};
+  \node[fwbox, minimum width=1.25cm] (fws4) at (2.6,-1.7) {FG-60F};
+  \node[fwbox, minimum width=1.25cm] (fws5) at (5.2,-1.7) {FG-60F};
 
-  % Liens DC-MPLS
-  \draw[-Stealth, thick, thbleu] (fw1.south) -- (fw1.south |- mpls.west) -- (mpls.west);
-  \draw[-Stealth, thick, thbleu] (dc1.south) -- (fw1.north);
-  \draw[-Stealth, thick, thbleu] (fw2.south) -- (fw2.south |- mpls.east) -- (mpls.east);
-  \draw[-Stealth, thick, thbleu] (dc2.south) -- (fw2.north);
+  \node[sitebox] (sA1) at (-5.2,-3.05) {Centre stockage\\Bordeaux};
+  \node[sitebox] (sA2) at (-2.6,-3.05) {Centre stockage\\Nantes};
+  \node[sitebox] (sB1) at (0,-3.05) {Centre tri\\Lille};
+  \node[sitebox] (sB2) at (2.6,-3.05) {Centre tri\\Marseille};
+  \node[sitebox] (sC1) at (5.2,-3.05) {Plateau bureau\\Paris (siège)};
 
-  % Lien Internet
-  \draw[-Stealth, thick, thgrisfonce, dashed] (fw1.east) -- ++(1.5,0) |- (inet.west);
-  \draw[-Stealth, thick, thgrisfonce, dashed] (fw2.west) -- ++(-0.5,0) -- (inet.north);
+  \draw[thick, thbleu] (mpls.south) -- ++(0,-0.45) -| (fws1.north);
+  \draw[thick, thbleu] (mpls.south) -- ++(0,-0.45) -| (fws2.north);
+  \draw[thick, thbleu] (mpls.south) -- ++(0,-0.45) -| (fws3.north);
+  \draw[thick, thbleu] (mpls.south) -- ++(0,-0.45) -| (fws4.north);
+  \draw[thick, thbleu] (mpls.south) -- ++(0,-0.45) -| (fws5.north);
 
-  % Sites
-  \node[sitebox] (sA1) at (0,-3.5) {Centre stockage\\Bordeaux};
-  \node[sitebox] (sA2) at (3,-3.5) {Centre stockage\\Nantes};
-  \node[sitebox] (sB1) at (6,-3.5) {Centre tri\\Lille};
-  \node[sitebox] (sB2) at (9,-3.5) {Centre tri\\Marseille};
-  \node[sitebox] (sC1) at (12,-3.5) {Plateau bureau\\Paris (Siège)};
+  \draw[liensite] (fws1.south) -- (sA1.north);
+  \draw[liensite] (fws2.south) -- (sA2.north);
+  \draw[liensite] (fws3.south) -- (sB1.north);
+  \draw[liensite] (fws4.south) -- (sB2.north);
+  \draw[liensite] (fws5.south) -- (sC1.north);
 
-  \node[font=\footnotesize, thgrisfonce] at (6,-4.8) {\textit{... et 16 autres sites}};
-
-  % SD-WAN sur sites
-  \node[fwbox, minimum width=1.5cm] (fws1) at (0,-2) {FG-60F};
-  \node[fwbox, minimum width=1.5cm] (fws2) at (3,-2) {FG-60F};
-  \node[fwbox, minimum width=1.5cm] (fws3) at (6,-2) {FG-60F};
-  \node[fwbox, minimum width=1.5cm] (fws4) at (9,-2) {FG-60F};
-  \node[fwbox, minimum width=1.5cm] (fws5) at (12,-2) {FG-60F};
-
-  \draw[thick, thbleu] (mpls.south) -- ++(0,-0.5) -| (fws1.north);
-  \draw[thick, thbleu] (mpls.south) -- ++(0,-0.5) -| (fws2.north);
-  \draw[thick, thbleu] (mpls.south) -- ++(0,-0.5) -| (fws3.north);
-  \draw[thick, thbleu] (mpls.south) -- ++(0,-0.5) -| (fws4.north);
-  \draw[thick, thbleu] (mpls.south) -- ++(0,-0.5) -| (fws5.north);
-
-  \draw[thick, thorange] (fws1.south) -- (sA1.north);
-  \draw[thick, thorange] (fws2.south) -- (sA2.north);
-  \draw[thick, thorange] (fws3.south) -- (sB1.north);
-  \draw[thick, thorange] (fws4.south) -- (sB2.north);
-  \draw[thick, thorange] (fws5.south) -- (sC1.north);
+  \node[font=\scriptsize, thgrisfonce] at (0,-4.05) {\textit{... et 16 autres sites}};
 \end{tikzpicture}
 \caption{Architecture réseau globale}
 \label{fig:archi_reseau}
@@ -1210,7 +1212,7 @@ Les switches Cisco Catalyst 9200/9300 sont configurés avec les mécanismes de s
 
 \subsection{Gestion de la vidéosurveillance}
 
-La vidéosurveillance de BOOM représente un flux réseau significatif (jusqu'à 200 caméras par centre de stockage) avec des contraintes spécifiques que nous adressons comme suit :
+La vidéosurveillance de BOOM représente un volume réseau important (jusqu'à 200 caméras par centre de stockage) avec des contraintes spécifiques que nous adressons comme suit :
 
 \begin{itemize}
 \item \textbf{2 VLAN dédiés par site} (VLAN 200 et 201) : séparation des flux vidéo (data) et de la gestion (management) des caméras, conformément aux exigences du cahier des charges ;
@@ -1242,7 +1244,7 @@ Le WiFi constitue un composant critique de l'infrastructure de BOOM pour plusieu
 \item Le BYOD et les accès invités nécessitent une couverture WiFi dans les zones de bureaux.
 \end{itemize}
 
-Les environnements d'entrepôt présentent des défis majeurs pour le WiFi : structures métalliques des rayonnages qui créent des réflexions et des zones d'ombre, températures extrêmes dans les zones froid négatif ($-25$°C) et froid positif ($+2$°C), et forte densité de terminaux mobiles se déplaçant rapidement (chariots à 10-15 km/h).
+Les environnements d'entrepôt imposent plusieurs contraintes au WiFi : structures métalliques des rayonnages qui créent des réflexions et des zones d'ombre, températures extrêmes dans les zones froid négatif ($-25$°C) et froid positif ($+2$°C), et forte densité de terminaux mobiles se déplaçant rapidement (chariots à 10-15 km/h).
 
 \section{Solution proposée}
 
@@ -1254,8 +1256,8 @@ Nous proposons des bornes \textbf{Cisco Catalyst 9130AXI} (WiFi 6, 802.11ax) pou
 \item Support WiFi 6 (802.11ax) avec OFDMA et MU-MIMO pour une meilleure gestion de la densité de terminaux ;
 \item Double radio (2,4~GHz + 5~GHz) avec radio dédiée à la sécurité et au scanning RF ;
 \item Support du fast roaming (802.11r/k/v) indispensable pour les chariots en mouvement ;
-\item Alimentation PoE+ (802.3at) -- compatible avec les switches Cisco Catalyst 9200/9300 ;
-\item Température de fonctionnement de $-20$°C à $+50$°C pour le modèle industriel (C9130AXI), adapté aux zones de froid positif.
+\item PoE+ (802.3at) pour les switches Cisco Catalyst 9200 et 9300 ;
+\item Fonctionnement de $-20\,^\circ\mathrm{C}$ à $+50\,^\circ\mathrm{C}$ pour le modèle industriel C9130AXI, adapté aux zones de froid positif.
 \end{itemize}
 
 Pour les zones de \textbf{froid négatif} ($-25$°C), nous utilisons le modèle \textbf{Cisco IW9167E} (WiFi 6E industriel outdoor) certifié pour fonctionner de $-40$°C à $+70$°C, avec un boîtier étanche IP67.
@@ -1385,7 +1387,7 @@ Nous proposons une solution de téléphonie sur IP centralisée basée sur \text
 
 \begin{itemize}
 \item Le coût de licence compétitif par rapport aux solutions propriétaires (Cisco, Alcatel) ;
-\item La richesse fonctionnelle native : standard automatique, files d'attente, enregistrement d'appels, intégration CRM, visioconférence intégrée ;
+\item Les fonctions nécessaires : standard automatique, files d'attente, enregistrement d'appels, intégration CRM, visioconférence intégrée ;
 \item La facilité d'administration via une interface web intuitive ;
 \item La compatibilité avec un large éventail de postes téléphoniques SIP ;
 \item Le support natif du protocole SIP pour le trunking opérateur ;
@@ -1444,7 +1446,7 @@ La connexion au réseau téléphonique commuté (RTC/RNIS) est assurée par un \
 \begin{table}[H]
 \centering
 \small
-\begin{tabularx}{\textwidth}{L{3cm}L{3.5cm}C{1.5cm}L{4.5cm}}
+\begin{tabularx}{\textwidth}{@{}L{3cm}L{3.4cm}C{1.8cm}L{4.5cm}@{}}
 \toprule
 \textbf{Modèle} & \textbf{Usage} & \textbf{Quantité} & \textbf{Caractéristiques} \\
 \midrule
@@ -1710,7 +1712,7 @@ DHCP / DNS & Windows Server & Services réseau centralisés, DHCP par site (IP H
 
 \section{Supervision}
 
-La supervision est assurée par \textbf{Zabbix} (solution open-source éprouvée), déployé sur une VM dédiée dans le datacenter principal. Zabbix collecte en temps réel les métriques de l'ensemble des composants de l'infrastructure :
+La supervision est assurée par \textbf{Zabbix}, déployé sur une VM dédiée dans le datacenter principal. Zabbix collecte en temps réel les métriques de l'ensemble des composants de l'infrastructure :
 
 \begin{itemize}
 \item \textbf{Réseau} : état des interfaces, utilisation bande passante, erreurs CRC, état PoE, latence WAN, état des tunnels VPN (via SNMP v3) ;
@@ -1819,53 +1821,51 @@ Le déploiement des sites se fait par vagues de 3 à 4 sites, avec un rythme d'e
 \begin{figure}[H]
 \centering
 \begin{ganttchart}[
-  hgrid,
-  vgrid={*{11}{draw=thgris}},
-  x unit=1cm,
-  y unit title=0.6cm,
-  y unit chart=0.55cm,
+  hgrid={*{20}{draw=thgris!55, dotted}},
+  vgrid={*{11}{draw=thgris!45}},
+  x unit=0.92cm,
+  y unit title=0.56cm,
+  y unit chart=0.52cm,
   title height=1,
-  bar height=0.6,
-  bar/.append style={fill=thbleu!60},
-  bar incomplete/.append style={fill=thorange!40},
-  milestone/.append style={fill=thorange},
-  group/.append style={draw=thbleu, fill=thbleu!20},
+  bar height=0.5,
+  title/.append style={draw=black!65, fill=white},
+  bar/.append style={draw=black!60, fill=thbleu!55, rounded corners=0pt},
+  milestone/.append style={draw=black!65, fill=thorange, minimum size=6pt, inner sep=0pt},
   title label font=\footnotesize\bfseries,
-  bar label font=\footnotesize,
-  group label font=\footnotesize\bfseries,
-  milestone label font=\footnotesize\itshape,
+  bar label font=\scriptsize,
+  milestone label font=\scriptsize\itshape,
 ]{1}{12}
   \gantttitle{Mois}{12} \\
   \gantttitlelist{1,...,12}{1} \\
 
-  \ganttgroup{Conception}{1}{2} \\
+  \ganttbar[bar/.append style={draw=thbleu!70, fill=thbleu!14}, bar label font=\footnotesize\bfseries, bar height=0.32]{Conception}{1}{2} \\
   \ganttbar{Étude détaillée}{1}{2} \\
   \ganttbar{Commande équipements}{2}{3} \\
 
-  \ganttgroup{Datacenter}{3}{4} \\
+  \ganttbar[bar/.append style={draw=thbleu!70, fill=thbleu!14}, bar label font=\footnotesize\bfseries, bar height=0.32]{Datacenter}{3}{4} \\
   \ganttbar{Installation DC principal}{3}{4} \\
   \ganttbar{Migration AS/400}{4}{4} \\
   \ganttbar{Installation DC PRA}{4}{5} \\
 
-  \ganttgroup{Pilote}{4}{5} \\
+  \ganttbar[bar/.append style={draw=thbleu!70, fill=thbleu!14}, bar label font=\footnotesize\bfseries, bar height=0.32]{Pilote}{4}{5} \\
   \ganttbar{Déploiement site pilote}{4}{5} \\
   \ganttmilestone{Recette pilote}{5} \\
 
-  \ganttgroup{WAN}{4}{6} \\
+  \ganttbar[bar/.append style={draw=thbleu!70, fill=thbleu!14}, bar label font=\footnotesize\bfseries, bar height=0.32]{WAN}{4}{6} \\
   \ganttbar{Commande liens opérateur}{4}{4} \\
   \ganttbar{Activation WAN}{5}{6} \\
 
-  \ganttgroup{Déploiement sites}{5}{10} \\
+  \ganttbar[bar/.append style={draw=thbleu!70, fill=thbleu!14}, bar label font=\footnotesize\bfseries, bar height=0.32]{Déploiement sites}{5}{10} \\
   \ganttbar{Vague 1 (3 sites)}{5}{6} \\
   \ganttbar{Vague 2 (4 sites)}{6}{7} \\
   \ganttbar{Vague 3 (5 sites)}{7}{8} \\
   \ganttbar{Vague 4 (6 sites)}{8}{9} \\
   \ganttbar{Vague 5 (3 sites + siège)}{9}{10} \\
 
-  \ganttgroup{Finalisation}{11}{12} \\
+  \ganttbar[bar/.append style={draw=thbleu!70, fill=thbleu!14}, bar label font=\footnotesize\bfseries, bar height=0.32]{Finalisation}{11}{12} \\
   \ganttbar{Recette globale}{11}{11} \\
   \ganttbar{Formation et transfert}{11}{12} \\
-  \ganttmilestone{Mise en exploitation}{12}
+  \ganttmilestone[milestone/.append style={xshift=-6pt}]{Mise en exploitation}{12}
 \end{ganttchart}
 \caption{Diagramme de Gantt du projet}
 \label{fig:gantt}
@@ -1910,7 +1910,7 @@ La présente proposition financière détaille l'ensemble des coûts d'investiss
 \begin{table}[H]
 \centering
 \small
-\begin{tabularx}{\textwidth}{L{5cm}C{1.2cm}R{2cm}R{2.5cm}}
+\begin{tabularx}{\textwidth}{@{}L{7.2cm}C{1.1cm}R{1.7cm}R{2.3cm}@{}}
 \toprule
 \textbf{Désignation} & \textbf{Qté} & \textbf{PU HT} & \textbf{Total HT} \\
 \midrule
@@ -1949,7 +1949,7 @@ La présente proposition financière détaille l'ensemble des coûts d'investiss
 \begin{table}[H]
 \centering
 \small
-\begin{tabularx}{\textwidth}{L{5.5cm}C{1cm}R{1.8cm}R{2.5cm}}
+\begin{tabularx}{\textwidth}{@{}L{7.4cm}C{1cm}R{1.7cm}R{2.3cm}@{}}
 \toprule
 \textbf{Désignation} & \textbf{Qté} & \textbf{PU HT} & \textbf{Total HT} \\
 \midrule
@@ -1991,7 +1991,7 @@ La présente proposition financière détaille l'ensemble des coûts d'investiss
 \begin{table}[H]
 \centering
 \small
-\begin{tabularx}{\textwidth}{L{5.5cm}C{1cm}R{1.8cm}R{2.5cm}}
+\begin{tabularx}{\textwidth}{@{}L{7.4cm}C{1cm}R{1.7cm}R{2.3cm}@{}}
 \toprule
 \textbf{Désignation} & \textbf{Qté} & \textbf{PU HT} & \textbf{Total HT} \\
 \midrule
@@ -2013,7 +2013,7 @@ Supports de montage + câbles & 339 & 35~\euro{} & 11\,865~\euro{} \\
 \begin{table}[H]
 \centering
 \small
-\begin{tabularx}{\textwidth}{L{5.5cm}C{1cm}R{1.8cm}R{2.5cm}}
+\begin{tabularx}{\textwidth}{@{}L{7.4cm}C{1cm}R{1.7cm}R{2.3cm}@{}}
 \toprule
 \textbf{Désignation} & \textbf{Qté} & \textbf{PU HT} & \textbf{Total HT} \\
 \midrule
@@ -2038,7 +2038,7 @@ Trunk SIP OVH (100 canaux, 36 mois) & 36 & 480~\euro{} & 17\,280~\euro{} \\
 \begin{table}[H]
 \centering
 \small
-\begin{tabularx}{\textwidth}{L{5.5cm}C{1cm}R{1.8cm}R{2.5cm}}
+\begin{tabularx}{\textwidth}{@{}L{7.4cm}C{1cm}R{1.7cm}R{2.3cm}@{}}
 \toprule
 \textbf{Désignation} & \textbf{Qté} & \textbf{PU HT} & \textbf{Total HT} \\
 \midrule
@@ -2062,7 +2062,7 @@ Samsung Galaxy XCover 6 Pro & 780 & 340~\euro{} & 265\,200~\euro{} \\
 \begin{table}[H]
 \centering
 \small
-\begin{tabularx}{\textwidth}{L{5.5cm}C{1.5cm}R{1.5cm}R{2.5cm}}
+\begin{tabularx}{\textwidth}{@{}L{7.4cm}C{1.2cm}R{1.5cm}R{2.3cm}@{}}
 \toprule
 \textbf{Désignation} & \textbf{Jours} & \textbf{TJM HT} & \textbf{Total HT} \\
 \midrule
@@ -2113,7 +2113,7 @@ Samsung Galaxy XCover 6 Pro & 780 & 340~\euro{} & 265\,200~\euro{} \\
 \begin{table}[H]
 \centering
 \small
-\begin{tabularx}{\textwidth}{L{6cm}C{1.2cm}R{1.5cm}R{2.5cm}}
+\begin{tabularx}{\textwidth}{@{}L{7.1cm}C{1.4cm}R{1.8cm}R{2.4cm}@{}}
 \toprule
 \textbf{Désignation} & \textbf{Durée} & \textbf{Coût/an} & \textbf{Total 3 ans} \\
 \midrule
@@ -2187,7 +2187,7 @@ Le coût total du projet ramené au nombre d'utilisateurs permet de situer l'inv
 \item \textbf{Coût par utilisateur sur 3 ans} : 3\,068~\euro{}~HT, soit \textbf{$\sim$85~\euro{}/mois/utilisateur}
 \end{itemize}
 
-Ce ratio est cohérent avec les standards du marché pour une infrastructure complète (poste de travail + réseau + téléphonie + datacenter) dans le secteur de la logistique industrielle, où les contraintes de disponibilité et de robustesse des équipements (terminaux durcis, WiFi entrepôt, DECT) tirent les coûts vers le haut par rapport à un environnement tertiaire classique.
+Ce montant couvre le renouvellement des postes, du réseau LAN/WAN, du WiFi, de la téléphonie, de l'hébergement datacenter, du PRA et des prestations de déploiement. Le détail par lot permet d'isoler les postes récurrents des investissements initiaux.
 
 \subsection{Options proposées}
 
@@ -2309,9 +2309,9 @@ WPA3 & Wi-Fi Protected Access 3 -- protocole de sécurité WiFi \\
 \section{Conditions de validité}
 
 \begin{itemize}
-\item La présente offre est valable \textbf{90 jours} à compter de sa date d'émission (15 novembre 2024).
+\item La présente offre est valable \textbf{90 jours} à compter de sa date d'émission (4 juin 2026).
 \item Les prix indiqués sont fermes et non révisables pour la durée du marché, sous réserve que la commande soit passée dans le délai de validité de l'offre.
-\item Les délais de livraison des équipements sont donnés à titre indicatif et peuvent varier en fonction de la disponibilité des constructeurs au moment de la commande.
+\item Les délais de livraison des équipements sont prévisionnels et dépendront de la disponibilité confirmée par les constructeurs au moment de la commande.
 \item L'ensemble des prestations est soumis aux Conditions Générales de Vente de ToshiHaut SAS (disponibles sur demande).
 \item Les licences logicielles (VMware, Veeam, Cisco DNA, Fortinet, 3CX) sont soumises aux conditions de licence de leurs éditeurs respectifs.
 \end{itemize}
@@ -2337,7 +2337,7 @@ Les prestations de maintenance et de support (LOT~7) ainsi que les abonnements W
 \vspace{0.5cm}
 \textbf{Antoine Mercier}\\
 Directeur Général -- ToshiHaut SAS\\
-Fait à Toulouse, le 15 novembre 2024
+Fait à Toulouse, le 4 juin 2026
 \end{center}
 
 \end{document}
